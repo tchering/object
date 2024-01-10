@@ -2,36 +2,7 @@
 require_once("config/parametre.php");
 class MyFct
 {
-    function connexion($host = HOST, $dbname = DBNAME, $user = USER, $password = PASSWORD)
-    {
-        $dns = "mysql:host=$host;dbname=$dbname;charset=utf8";
-        try {
-            $connexion = new PDO($dns, $user, $password);
-        } catch (Exception $e) {
-            echo "<h1> Connexion impossible ! Verifiez les paramètres !</h1>";
-            die;
-        }
-        return $connexion;
-    }
-
-    function findByIdTable($nomTable, $id)
-    {
-        $connexion = $this->connexion();  // valeur retouner par la fontion connexion() du fichier myFct.
-        $sql = "select * from $nomTable where id=?";  // Ecrire la requete sql correspondante
-        $requete = $connexion->prepare($sql);   //  Dire à php de oreparer la requete sql
-        $requete->execute([$id]);  // Executer la requete avec id= $id
-        $resultat = $requete->fetch();  // Mettre dans $article l'article trouvé
-        return $resultat;
-    }
-
-    function deleteByIdTable($nomTable, $id)
-    {
-        $connexion = $this->connexion();
-        $sql = "delete from $nomTable where id=?";
-        $requete = $connexion->prepare($sql);
-        $requete->execute([$id]);
-        return true;
-    }
+  
     function generatePage($file, $variables = [], $base = "page/base-bs.html.php")
     {  // generation d'une page
         // $file  : fichier html
@@ -57,26 +28,11 @@ class MyFct
             die;
         }
     }
-
-
-
-
-
-
-
     function printr($tableau)
     {
         echo "<pre>";
         print_r($tableau);
         echo "</pre>";
     }
-    function listTable($nomTable)
-    {
-        $sql = "select * from $nomTable";
-        $connexion = $this->connexion();
-        $requete = $connexion->prepare($sql);
-        $requete->execute();
-        $tables = $requete->fetchAll();
-        return $tables;
-    }
+
 }
