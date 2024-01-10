@@ -3,7 +3,7 @@ require_once("config/parametre.php");
 
 class Manager
 {
-    function getDescribeTable($table)
+   public function getDescribeTable($table)
     {
         $connexion = $this->connexion();
         $sql = "desc $table";  // requete pour affichage de la structure la table collaborateur
@@ -22,7 +22,7 @@ class Manager
         }
         return $variables;
     }
-    function connexion($host = HOST, $dbname = DBNAME, $user = USER, $password = PASSWORD)
+    public function connexion($host = HOST, $dbname = DBNAME, $user = USER, $password = PASSWORD)
     {
         $dns = "mysql:host=$host;dbname=$dbname;charset=utf8";
         try {
@@ -33,7 +33,7 @@ class Manager
         }
         return $connexion;
     }
-    function findByIdTable($nomTable, $id)
+    public function findByIdTable($nomTable, $id)
     {
         $connexion = $this->connexion();  // valeur retouner par la fontion connexion() du fichier myFct.
         $sql = "select * from $nomTable where id=?";  // Ecrire la requete sql correspondante
@@ -42,8 +42,7 @@ class Manager
         $resultat = $requete->fetch();  // Mettre dans $article l'article trouvé
         return $resultat;
     }
-
-    function deleteByIdTable($nomTable, $id)
+    public function deleteByIdTable($nomTable, $id)
     {
         $connexion = $this->connexion();
         $sql = "delete from $nomTable where id=?";
@@ -52,7 +51,7 @@ class Manager
         return true;
     }
 
-    function printr($tableau)
+   public function printr($tableau)
     {
         echo "<pre>";
         print_r($tableau);
