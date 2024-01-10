@@ -1,5 +1,6 @@
 <?php
 require_once("config/parametre.php");
+class MyFct{
 function connexion($host=HOST,$dbname=DBNAME,$user=USER,$password=PASSWORD){
     $dns="mysql:host=$host;dbname=$dbname;charset=utf8";
     try{
@@ -83,6 +84,7 @@ function listTable($nomTable){
     $requete->execute();
     $tables=$requete->fetchAll();
     return $tables;
+}
 }
 
 ?>
