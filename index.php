@@ -8,3 +8,5 @@ printr($article);
 $art=new Article();
 $art = $art->findByIdTable('article',4);
 printr($art);
+$listArticle = $manager->listTable('article');
+printr($listArticle);
