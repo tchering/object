@@ -1,0 +1,52 @@
+<?php
+//! This is index.php before moving function in another folder service with name extra.php
+// include("./Model/Article.php");
+// include("./Model/Client.php");
+
+spl_autoload_register('charger'); // this is to auto include the file. with this we dont need to use include each time like above.
+//--creating an object using the Article model (see the Article class)
+$article = new Article();  //on l'appelle une instanciation
+$article->setId(25);
+$article->setNumArticle('BB000147');
+$article->setDesignation('Biere mort subite');
+$article->setPrixUnitaire(3.5);
+
+echo $article->getDesignation() ;
+echo "<br>";
+echo $article->getNumArticle()  ;
+echo "<br>"; //to break line
+
+print_r($article); //not easy to ready without our function printr();
+
+printr($article);
+
+//!----object client
+$client = new Client();
+$client->setId(2);
+$client->setNumClient('CLT00128');
+$client->setNomClient("SONAM SHERPA");
+$client->setAdressClient("Kathmandu,Nepal");
+
+printr($client);
+
+
+//!----------mes fonctions
+function printr($array){
+    echo "<pre>";
+    print_r($array);
+    echo " </pre>";
+}
+
+function charger($class){ //le parametre $class contient le nom de la class a instancier avec new
+    $fileModel ="Model/$class.php"; // Exemple si $class="Article" alors $fileModel = "Model/Article.php"
+    $fileController ="Controller/$class.php";
+    $fileView ="View/$class.php";
+    $fileService ="Service/$class.php";
+    $files =[$fileModel,$fileController,$fileView,$fileService];
+    foreach($files as $file){
+        if(file_exists($file)){
+            include($file);
+        }
+    }
+    
+}
