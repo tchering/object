@@ -3,15 +3,5 @@ include("./Service/extra.php"); //! here we have separated function file in anot
 
 spl_autoload_register('charger'); // this is to auto include the file. with this we dont need to use include each time like above.
 $myFct = new MyFct();
-
-$art =[
-    'id'=>2,
-    'numArticle'=>'BV0002',
-    'designation'=>'Vin Listel Gris 75cl',
-    'prixUnitaire'=>15.20,
-];
-$article = new Article($art);
-$client = new Client();
-
+$article = $myFct->findByIdTable('article',2);
 $myFct->printr($article);
-$myFct->printr($client);
