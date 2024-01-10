@@ -1,6 +1,6 @@
 <?php
 
-class Article extends Manager
+class Article extends ArticleManager
 {
     private $id;
     private $numArticle;
