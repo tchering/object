@@ -1,22 +1,39 @@
-<div class="col-sm-12">
+<style>
+    #tbody_art {
+        display: block;
+        width: 100%;
+        height: 200px;
+        overflow: auto;
+    }
+
+    #thead_art,
+    #tbody_art tr,
+    #tfoot_art {
+        display: table;
+        width: 100%;
+    }
+</style>
+<div class="">
     <h1 class="titre center text-light">Liste Article</h1>
-    <table class="table w-auto col-sm-12">
+    <table class="table w100">
         <thead id="thead_art">
             <tr class="bg-success">
-                <th class ="w10">ID</th>
-                <th class ="w10">CODE</th>
-                <th class ="w40">DESIGNATION</th>
-                <th class ="w10">PU</th>
-                <th class ="w30">ACTION</th>
-        <tbody id="tbody_art" class="m-sm-0 p-sm-0">
+                <th class="w10">ID</th>
+                <th class="w20">CODE</th>
+                <th class="w40">DESIGNATION</th>
+                <th class="w10">PU</th>
+                <th class="w20">ACTION</th>
+            </tr>
+        </thead>
+        <tbody id="tbody_art" class="">
         </tbody>
         <tfoot id="tfoot_art">
-            <tr class="bg-success">
-                <th colspan="5" class="text-center" id="nbre_art">Nombre article...</th>
+            <tr>
+                <th colspan="5" class="text-center bg-success" id="nbre_art">Nombre article...</th>
             </tr>
         </tfoot>
-        </tr>
-        </thead>
+    
+
     </table>
 </div>
 
@@ -28,11 +45,11 @@
         let html = articles.map((article) => {
             return `
                 <tr class="">
-                    <td>${article.id} </td>
-                    <td>${article.numArticle} </td>
-                    <td>${article.designation} </td>
-                    <td>${article.prixUnitaire}</td>
-                    <td class="buttons gap-sm-2 d-grid d-md-flex justify-content-around">
+                    <td class="w10">${article.id} </td>
+                    <td class="w20">${article.numArticle} </td>
+                    <td class="w40">${article.designation} </td>
+                    <td class="w10">${article.prixUnitaire}</td>
+                    <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
                         <button class="btn btn-sm btn-success">Afficher</button>
                         <button class="btn btn-sm btn-danger">Supprimer</button>
                         <button class="btn btn-sm btn-primary">Modifier</button>
@@ -46,6 +63,7 @@
         //! to show total number of articles.
         const nbre = articles.length;
         nbre_art.innerHTML = `Nombre d'articles : ${nbre}`;
+        tbody_art.scrollTop = tbody_art.scrollHeight;
     };
     //!calling the function afficher with param articles.
     afficher(articles);
