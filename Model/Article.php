@@ -7,9 +7,7 @@ class Article extends ArticleManager
     private $designation;
     private $prixUnitaire;
 
-    public function __construct($data = [
-
-    ])
+    public function __construct($data = [])
     {
         if ($data) {
             foreach($data as $key=>$valeur){
@@ -20,18 +18,6 @@ class Article extends ArticleManager
                     $this->$set($valeur);
                 }
             }
-
-            // $this->setId($data['id']);
-            // $this->setNumArticle($data['numArticle']);
-            // $this->setDesignation($data['designation']);
-            // $this->setPrixUnitaire($data['prixUnitaire']);
-
-
-
-            //    $this->setId(1);
-            //    $this->setNumArticle('BBOO12');
-            //    $this->setDesignation('Biere Lister Gris 75cl');
-            //    $this->setPrixUnitaire(8.10);
         }
     }
 
@@ -63,7 +49,6 @@ class Article extends ArticleManager
     {
         return $this->designation;
     }
-
 
     public function setDesignation($designation)
     {

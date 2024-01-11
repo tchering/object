@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="page/cv/css/style1.css" />
+    <link rel="stylesheet" href="./Public/css/style.css">
+    <link rel="stylesheet" href="./Public/page/cv/css/style1.css" />
     <title>Document</title>
 </head>
 
@@ -31,7 +31,7 @@
     <div id="main">
         <div id="aside">
             <div class="center" id="logo">
-                <img src="img/Logo_Afpa.jpg" width="75%" alt="">
+                <img src="./Public/img/Logo_Afpa.jpg" width="75%" alt="">
             </div>
             <ul class="niveau-v1">
                 <li><a href="">Caisse</a></li>

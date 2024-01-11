@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="./fontawesome-free-6.5.0-web/css/all.css">
-    <script src="./bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./Public/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
+    <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
+    <link rel="stylesheet" href="./Public/css/style.css">
     <title>Document</title>
     <style>
     #section-bs {

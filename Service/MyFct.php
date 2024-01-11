@@ -3,7 +3,8 @@ require_once("config/parametre.php");
 class MyFct
 {
   
-    function generatePage($file, $variables = [], $base = "page/base-bs.html.php")
+    //!Changed $base structure added view because its in folder view now
+    function generatePage($file, $variables = [], $base = "view/base-bs.html.php")
     {  // generation d'une page
         // $file  : fichier html
         //$variables  : une variable en tableau qui contnient comme indices les noms des variables utilisées par $file

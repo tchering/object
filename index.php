@@ -1,38 +1,20 @@
 <?php
-include("./Service/extra.php"); 
+include("./Service/extra.php");
 
 spl_autoload_register('charger');
-//!instant of article
-// $article=new Article();
-// $articles =$article->findAll();
-// MyFct::sprintr($articles);
-//! instant of ArticleManager
-// $articleManager = new ArticleManager();
-// $id = 2;
-// $article_array=$articleManager->findById($id,'array');
-// $article_obj = $articleManager->findById($id,'obj');
-// MyFct::sprintr($article_array);
-// MyFct::sprintr($article_obj);
+// initialization of the $path variable
+$path = 'accueil';
+// generating variables using the indices of $_GET. Example: $path, $action, $id, ...
+extract($_GET);
+// generating the controller name using $path. For example, if $path="article", then $nameController="ArticleController"
+$nameController = ucfirst($path) . "Controller";
+// generating the path where the file corresponding to the controller designated by $nameController is located. For example: "Controller/ArticleController.php"
+$fileController = "Controller/$nameController.php";
+//On test l'existance du fichier representé par $fileController
+if (file_exists($fileController)) {
+    $page = new $nameController();
+} else {
+    echo "<h1>The file $nameController does not exist</h1>";
+    die;
+}
 
-//? to show designation in $article_array
-//why dont we use echo $article_array-> here ?
-// echo $article_array['designation'] . '<br>';
-
-//? to show designation in $article_obj
-//its wrong to call article_obj['designation'];
-// echo $article_obj->getDesignation();
-
-//! this is to show all table in article in object but now showing.
-$articleManager = new ArticleManager();
-$article_obj = $articleManager->findAll('obj');
-MyFct::sprintr($article_obj);
-
-//! Here we are using function or method printr with 2 way.
-
-//? this is classic method by creating new instance of class MyFct
-// $myFct=new MyFct();
-// $myFct->cprintr($articles);
-
-//? this is static method without creating instance of class MyFct.
-// MyFct::sprintr($article_array);
-// MyFct::sprintr($article_obj);

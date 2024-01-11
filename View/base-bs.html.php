@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="./fontawesome-free-6.5.0-web/css/all.css">
-    <script src="./bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./Public/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
+    <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
+    <link rel="stylesheet" href="./Public/css/style.css">
     <title>Document</title>
     <style>
             #aside-left,
@@ -40,7 +40,8 @@
             <div class="collapse navbar-collapse justify-content-between" id="nav">
                 <ul class="navbar-nav px-2">
                     <li class="nav-item"><a href="index.php" class="nav-link text-light fw-bold">Accueil</a></li>
-                    <li class="nav-item"><a href="article.php" class="nav-link text-light fw-bold">Article</a></li>
+                    <!--//! changed href -->
+                    <li class="nav-item"><a href="index.php?path=article" class="nav-link text-light fw-bold">Article</a></li>
                     <li class="nav-item"><a href="article-ajax.php" class="nav-link text-light fw-bold">Article-Ajax</a></li>                    
                     <li class="nav-item"><a href="client.php" class="nav-link text-light fw-bold">Client</a></li>
                     <li class="nav-item dropdown"><a href="" class="nav-link text-light fw-bold dropdown-toggle"
@@ -90,7 +91,7 @@
 
             <div id="aside-left" class="col-md-3 bg_green">
                 <div class="center" id="logo">
-                    <img src="img/Logo_Afpa.jpg" width="100%" alt="" class="my-4">
+                    <img src="./Public/img/Logo_Afpa.jpg" width="100%" alt="" class="my-4">
                 </div>
                 <ul class="niveau-v1">
                     <li><a href="">Caisse</a></li>
