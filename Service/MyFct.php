@@ -28,7 +28,18 @@ class MyFct
             die;
         }
     }
-    function printr($tableau)
+
+    //! 
+ function cprintr($tableau)
+    {
+        echo "<pre>";
+        print_r($tableau);
+        echo "</pre>";
+    }
+
+
+    //! 
+    static function sprintr($tableau)
     {
         echo "<pre>";
         print_r($tableau);

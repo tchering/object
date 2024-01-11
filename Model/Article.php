@@ -7,7 +7,9 @@ class Article extends ArticleManager
     private $designation;
     private $prixUnitaire;
 
-    public function __construct($data = [])
+    public function __construct($data = [
+
+    ])
     {
         if ($data) {
             foreach($data as $key=>$valeur){

@@ -39,7 +39,7 @@ class Manager
         $sql = "select * from $nomTable where id=?";  // Ecrire la requete sql correspondante
         $requete = $connexion->prepare($sql);   //  Dire à php de oreparer la requete sql
         $requete->execute([$id]);  // Executer la requete avec id= $id
-        $resultat = $requete->fetch();  // Mettre dans $article l'article trouvé
+        $resultat = $requete->fetch(PDO::FETCH_ASSOC);   // Mettre dans $article l'article trouvé
         return $resultat;
     }
     public function deleteByIdTable($nomTable, $id)
@@ -51,19 +51,19 @@ class Manager
         return true;
     }
 
-   public function printr($tableau)
-    {
-        echo "<pre>";
-        print_r($tableau);
-        echo "</pre>";
-    }
+//    public function printr($tableau)
+//     {
+//         echo "<pre>";
+//         print_r($tableau);
+//         echo "</pre>";
+//     }
     function listTable($nomTable)
     {
         $sql = "select * from $nomTable";
         $connexion = $this->connexion();
         $requete = $connexion->prepare($sql);
         $requete->execute();
-        $tables = $requete->fetchAll();
+        $tables = $requete->fetchAll(pdo::FETCH_ASSOC);
         return $tables;
     }
 

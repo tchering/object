@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Page Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Ensuring the font from Google is used */
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800">
+    <!-- Navigation -->
+    <nav class="py-5 bg-gray-200">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="text-xl font-bold">HOSTINGER</div>
+            <div class="flex space-x-4">
+                <a href="#" class="text-gray-600 hover:text-gray-900">WordPress</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Créateur de Sites Internet</a>
+                <div class="relative group">
+                    <button class="text-gray-600 hover:text-gray-900">Hébergement</button>
+                    <div class="absolute hidden group-hover:block bg-white shadow-lg p-2 mt-1">
+                        <!-- Submenu items -->
+                    </div>
+                </div>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Pro</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Noms de Domaine</a>
+                <a href="#" class="bg-purple-600 text-white px-3 py-1 rounded">Connexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mx-auto px-6 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Left side -->
+            <div>
+                <h1 class="text-5xl font-bold leading-tight mb-6">Concrétisez votre idée en ligne avec un site web</h1>
+                <p class="mb-6">Jusqu'à <span class="text-red-600">-79%</span> sur l'hébergement + créateur de sites internet</p>
+                <ul class="mb-6">
+                    <li class="flex items-center mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Nom de domaine gratuit
+                    </li>
+                    <li class="flex items-center mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Migration de site internet gratuite
+                    </li>
+                    <li class="flex items-center mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Assistance clientèle 24h/24 et 7j/7
+                    </li>
+                </ul>
+                <div class="flex items-baseline mb-4">
+                    <span class="text-6xl font-bold">2,49</span>
+                    <span class="text-2xl font-bold">€/mois</span>
+                </div>
+                <p class="mb-4">+ 3 Mois gratuits</p>
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-gray-300 text-black text-center mr-2">01</div>
+                    <div class="text-2xl">:</div>
+                    <div class="w-10 h-10 bg-gray-300 text-black text-center mx-2">00</div>
+                    <div class="text-2xl">:</div>
+                    <div class="w-10 h-10 bg-gray-300 text-black text-center mx-2">03</div>
+                    <div class="text-2xl">:</div>
+                    <div class="w-10 h-10 bg-gray-300 text-black text-center ml-2">03</div>
+                </div>
+                <button class="bg-pink-500 text-white px-6 py-2 rounded">Profitez-en</button>
+                <div class="flex items-center mt-6">
+                    <i class="fas fa-shield-alt text-green-500 mr-2"></i> Garantie de remboursement de 30 jours
+                </div>
+            </div>
+
+            <!-- Right side -->
+            <div>
