@@ -1,8 +1,5 @@
 <div id='accueil' class="w100 ">
     <div class="banner">
-        <video autoplay loop muted width="100%">
-            <source src="video/hero.mp4">
-        </video>
-
+      <h1>Hello world</h1>
     </div>
 </div>

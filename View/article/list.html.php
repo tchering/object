@@ -29,7 +29,7 @@
         </tbody>
         <tfoot id="tfoot_art">
             <tr>
-                <th colspan="5" class="text-center bg-success" id="nbre_art">Nombre article...</th>
+                <th colspan="5" class="text-center bg-success" id="nbre_art"></th>
             </tr>
         </tfoot>
     
