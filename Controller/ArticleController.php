@@ -17,6 +17,11 @@ class ArticleController extends MyFct
                 // ];
                 // $this->generatePage($file,$variable);
                 //!this below code is same as above commented code.
+
+                //?And also this line is saying: In the instance of this object search a method generatePage.
+                //? Auto loader function is auto loading this class in index.php
+                //? The instance is created in index.php in this line  $page = new $nameController();
+                //? The instance inherit all the properties and methods of its parent class and aswell as MyFct because of extends MyFct above.
                 $this->generatePage($file, ['articles' => json_encode($articles)]);
                 break;
         }

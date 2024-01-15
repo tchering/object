@@ -1,5 +1,6 @@
 <?php
 
+
 //! In PHP, the extends keyword is used to create a class that inherits from another class. This is known as class inheritance or subclassing.
 class ArticleManager extends Manager
 {
@@ -21,16 +22,11 @@ class ArticleManager extends Manager
             return $resultat;
         }
     }
-    //
-    // public function find($id, $type = 'arr')
+    //!This function findById() below is showing just associative array.
+    // public function findById($id)
     // {
     //     $resultat = $this->findByIdTable('article', $id);
-    //     if ($type == 'obj') {
-    //         $obj = new Article($resultat);
-    //         return $obj;
-    //     } else {
-    //         return $resultat;
-    //     }
+    //     return $resultat;
     // }
     public function deleteById($id)
     {

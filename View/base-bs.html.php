@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse justify-content-between" id="nav">
                 <ul class="navbar-nav px-2">
                     <li class="nav-item"><a href="index.php" class="nav-link text-light fw-bold">Accueil</a></li>
-                    <!--//! changed href -->
+                   
                     <li class="nav-item"><a href="index.php?path=article" class="nav-link text-light fw-bold">Article</a></li>
 
                     <li class="nav-item"><a href="index.php?path=client" class="nav-link text-light fw-bold">Client</a></li>
