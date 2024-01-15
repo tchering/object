@@ -49,8 +49,8 @@
                     <td class = "w10">${client.adresseClient}</td>
                     <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
                         <button class="btn btn-sm btn-success">Afficher</button>
-                        <button class="btn btn-sm btn-danger">Supprimer</button>
                         <button class="btn btn-sm btn-primary">Modifier</button>
+                        <button class="btn btn-sm btn-danger">Supprimer</button>
                     </td>
                 </tr>
             `
