@@ -1,6 +1,10 @@
 <?php
 include("./Service/extra.php");
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 spl_autoload_register('charger');
 // initialization of the $path variable
 $path = 'accueil';
@@ -17,4 +21,3 @@ if (file_exists($fileController)) {
     echo "<h1>The file $nameController does not exist</h1>";
     die;
 }
-

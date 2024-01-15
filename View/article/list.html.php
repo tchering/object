@@ -2,7 +2,8 @@
     #tbody_art {
         display: block;
         width: 100%;
-        height: 200px;
+        height: 2
+        00px;
         overflow: auto;
     }
 

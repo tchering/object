@@ -11,7 +11,7 @@ class ArticleController extends MyFct
             case 'list':
                 $am = new ArticleManager();
                 $articles = $am->findAll();
-                $file = "view/article/list.html.php";
+                $file = "View/article/list.html.php";
                 // $variable=[
                 //   'articles'=>json_encode($articles)
                 // ];
