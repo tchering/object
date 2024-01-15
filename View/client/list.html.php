@@ -46,7 +46,7 @@
                     <td class = "w10"> ${client.id}</td>
                     <td class = "w20">${client.numClient}</td>
                     <td class = "w40">${client.nomClient}</td>
-                    <td class = "w10">${client.adressClient}</td>
+                    <td class = "w10">${client.adresseClient}</td>
                     <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
                         <button class="btn btn-sm btn-success">Afficher</button>
                         <button class="btn btn-sm btn-danger">Supprimer</button>
