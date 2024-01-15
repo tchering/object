@@ -6,7 +6,8 @@ class ArticleController extends MyFct
     {
         $action = 'list';
         //! here we are extracting <a href="index.php?path=article"> From base-bs.html.php
-        extract($_GET);
+        // extract($_GET);
+        if(isset($action[''])) { $_GET['']; }
         switch ($action) {
             case 'list':
                 $am = new ArticleManager();

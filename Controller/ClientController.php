@@ -1,5 +1,5 @@
 <?php
-class ClientController extends MyFct
+class ClientController
 {
     public function __construct()
     {
@@ -7,15 +7,26 @@ class ClientController extends MyFct
         extract($_GET);
         switch ($action) {
             case 'list':
-                $cm = new ClientManager();
-                $clients = $cm->showAll();
-                $varaibles = [
-                    'clients' => json_encode($clients),
-                ];
-
-                $file = "View/client/list.html.php";
-                $this->generatePage($file, $varaibles);
+                $this->listClient();
+                break;
+            case 'show':
                 break;
         }
+    }
+    // mes function 
+    function listClient()
+    {
+        $cm = new ClientManager();
+        $clients = $cm->showAll();
+        $variables = [
+            'clients'=>json_encode($clients),
+        ];
+        $files = "View/client/list.html.php";
+        $myFct = new MyFct();
+        $myFct->generatePage($files,$variables);
+    }
+    function showClient($id)
+    {
+        $cm = new ClientManager();
     }
 }

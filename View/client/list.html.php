@@ -56,7 +56,7 @@
             `
         }).join('');
         tbody_art.innerHTML = template;
-        let nbre = clients.length;
+        let nbre = `Total Clients: ${clients.length}`;
         nbre_art.innerHTML = nbre;
     }
     afficher(clients);

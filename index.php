@@ -6,10 +6,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 spl_autoload_register('charger');
-// initialization of the $path variable
-$path = 'accueil';
-// generating variables using the indices of $_GET. Example: $path, $action, $id, ...
-extract($_GET);
+// extract($_GET);
+//this method is more secure and recommended.
+$path = isset($_GET['path']) ? $_GET['path'] : '';
+
 // generating the controller name using $path. For example, if $path="article", then $nameController="ArticleController"
 $nameController = ucfirst($path) . "Controller";
 // generating the path where the file corresponding to the controller designated by $nameController is located. For example: "Controller/ArticleController.php"
