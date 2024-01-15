@@ -1,6 +1,9 @@
 <?php
 class ClientController
 {
+    //!A constructor is a special type of method that is automatically called when an object of a class is created. In this case, when an instance of ClientController is created with $page = new $nameController(); in this file, the constructor is automatically called.
+
+    //! Within the constructor of ClientController, it's setting $action to 'list', then using a switch statement to handle different actions. In the case of 'list', it creates a new ClientManager, calls the showAll method to get all articles, and then calls the generatePage method.
     public function __construct()
     {
         $action = "list";
@@ -19,11 +22,11 @@ class ClientController
         $cm = new ClientManager();
         $clients = $cm->showAll();
         $variables = [
-            'clients'=>json_encode($clients),
+            'clients' => json_encode($clients),
         ];
         $files = "View/client/list.html.php";
         $myFct = new MyFct();
-        $myFct->generatePage($files,$variables);
+        $myFct->generatePage($files, $variables);
     }
     function showClient($id)
     {
