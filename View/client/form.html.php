@@ -1,5 +1,6 @@
 <div class="m-auto w80 form">
     <h1 class="titre text-light">SAISIE CLIENT</h1>
+    //! Here action save is sent using method post 
     <form action="client&action=save" method="POST" class="form-container">
             <div class="my-2 hidden">
                 <label for="" class="lab30"></label>

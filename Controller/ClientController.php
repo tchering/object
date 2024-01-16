@@ -34,7 +34,8 @@ class ClientController extends MyFct
     //!---------------------My Functions
 
     //! here all the data passed via url are stored inside $data.
-    function supprimerClient($id){
+    function supprimerClient($id)
+    {
         $cm = new ClientManager();
         $cm->deleteById($id);
         header("location:client");
@@ -42,7 +43,7 @@ class ClientController extends MyFct
     }
     function insererClient()
     {
-        //!Here we dont need to instantiate ClientManager coz we dont have that we need in ClientManager.
+        //!Here we dont need to instantiate ClientManager coz we dont have any function in ClientManager that we need.
         $variables = [
             'id' => '',
             'numClient' => '',
