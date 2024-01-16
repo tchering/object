@@ -13,20 +13,23 @@ class ClientController extends MyFct
                 $this->listClient();
                 break;
             case 'show':
-                $this->afficherClient($id);
+                // gets url from list.html.php afficher button.
+                // index.php know which controller to execute in this case Client Controller.
+                // extract get extracts the variable 
+                $this->showClient($id);
                 break;
             case 'update':
-                $this->modifierClient($id);
+                $this->updateClient($id);
                 break;
             case 'insert':
-                $this->insererClient();
+                $this->insertClient();
                 break;
             case 'save': //this is defined in form.html.php 
-                //!when case save is called then it execure sauvegarderClient function
-                $this->sauvegarderClient($_POST); //here the data is sent via post method so there is post
+                //!when case save is called then it execure saveClient function
+                $this->saveClient($_POST); //here the data is sent via post method so there is post
                 break;
             case 'delete':
-                $this->supprimerClient($id);
+                $this->deleteClient($id);
                 break;
         }
     }
@@ -34,14 +37,14 @@ class ClientController extends MyFct
     //!---------------------My Functions
 
     //! here all the data passed via url are stored inside $data.
-    function supprimerClient($id)
+    function deleteClient($id)
     {
         $cm = new ClientManager();
         $cm->deleteById($id);
         header("location:client");
         exit();
     }
-    function insererClient()
+    function insertClient()
     {
         //!Here we dont need to instantiate ClientManager coz we dont have any function in ClientManager that we need.
         $variables = [
@@ -54,7 +57,7 @@ class ClientController extends MyFct
         $file = "View/client/form.html.php";
         $this->generatePage($file, $variables);
     }
-    function sauvegarderClient($data)
+    function saveClient($data)
     {
         $cm = new ClientManager();
         $connexion = $cm->connexion();
@@ -81,7 +84,7 @@ class ClientController extends MyFct
         //?Redirection vers page list client.
         header('location:client');
     }
-    function modifierClient($id)
+    function updateClient($id)
     {
         $cm = new ClientManager();
         $client = $cm->findById($id);
@@ -96,7 +99,7 @@ class ClientController extends MyFct
         $file = "View/client/form.html.php";
         $this->generatePage($file, $variables);
     }
-    function afficherClient($id)
+    function showClient($id)
     {
         $cm = new ClientManager();
         //!when we call findById in instance Of ClientManager it has access to Client.php getter setter method  aswell because we have created instance of Client.php class in ClientManager.php page

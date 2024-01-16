@@ -12,10 +12,10 @@ class ArticleManager extends Manager
     }
     //! by default if we dont put type then it is object
     //! here table article is associative array with index and we are transforming array in object.
-    public function findById($id, $type = 'array')
+    public function findById($id, $type = 'object')
     {
         $resultat = $this->findByIdTable('article', $id);
-        if ($type != 'array') {
+        if ($type) {
             $obj = new Article($resultat);
             return $obj;
         } else {
@@ -32,10 +32,10 @@ class ArticleManager extends Manager
     {
         $this->deleteByIdTable('article', $id);
     }
-    public function findAll($type = 'array')
+    public function findAll($type = 'object')
     {
         $resultat = $this->listTable('article');
-        if ($type != 'array') {
+        if ($type) {
             $obj = new Article();
             return $obj;
         } else {

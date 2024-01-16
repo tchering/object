@@ -16,7 +16,6 @@
 <div class="">
     <h1 class="titre center text-light">Liste Client</h1>
     <div class="div_btn">
-        //! action insert is here
         <a href="client&action=insert" class="btn btn-md btn-success mb-2 print-none">Ajourter Client</a>
         <a href="javascript:window.print()" class="btn btn-md btn-primary mb-2 print-none">Imprimer</a>
     </div>
