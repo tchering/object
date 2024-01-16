@@ -27,6 +27,11 @@
 #div_btn_client {
   padding-top: 10px;
 }
+.div_btn {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*-----------------------ECF--------------------*/
 @media print {
   nav,
@@ -181,6 +186,7 @@
     display: flex;
     flex-direction: column;
   }
+
   .form-input {
     width: 100%;
   }

@@ -38,11 +38,11 @@
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
             <div class="collapse navbar-collapse justify-content-between" id="nav">
                 <ul class="navbar-nav px-2">
-                    <li class="nav-item"><a href="index.php" class="nav-link text-light fw-bold">Accueil</a></li>
+                    <li class="nav-item"><a href="accueil" class="nav-link text-light fw-bold">Accueil</a></li>
                    
-                    <li class="nav-item"><a href="index.php?path=article" class="nav-link text-light fw-bold">Article</a></li>
+                    <li class="nav-item"><a href="article" class="nav-link text-light fw-bold">Article</a></li>
 
-                    <li class="nav-item"><a href="index.php?path=client" class="nav-link text-light fw-bold">Client</a></li>
+                    <li class="nav-item"><a href="client" class="nav-link text-light fw-bold">Client</a></li>
                     <li class="nav-item dropdown"><a href="" class="nav-link text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">Commande</a>
                         <ul class="dropdown-menu">
                             <li class="nav-item"><a href="" class="nav-link text-primary">Devis</a></li>

@@ -48,7 +48,8 @@
                     <td class = "w40">${client.nomClient}</td>
                     <td class = "w10">${client.adresseClient}</td>
                     <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
-                        <button class="btn btn-sm btn-success">Afficher</button>
+                    
+                    <a href ="client&action=show&id=${client.id}" class="btn btn-sm btn-success">Afficher</a>
                         <button class="btn btn-sm btn-primary">Modifier</button>
                         <button class="btn btn-sm btn-danger">Supprimer</button>
                     </td>

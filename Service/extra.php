@@ -18,8 +18,9 @@ function charger($class){ //le parametre $class contient le nom de la class a in
             include($file);
         }
     }
-    
 }
+
+//The selected code will autoload only the class that is required at runtime.
 
 
 ?>

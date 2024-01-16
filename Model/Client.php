@@ -5,7 +5,7 @@ class Client
     private $id;
     private $numClient;
     private $nomClient; // Corrected variable name
-    private $adressClient;
+    private $adresseClient;
 
     public function __construct($data = [])
     {
@@ -15,7 +15,7 @@ class Client
         if ($data) {
             foreach ($data as $key => $value) {
                 // Creation of set function
-                
+
                 $set = "set" . ucfirst($key);  // Corrected function name to ucfirst()
                 //$set="set".ucFirst(nomClient) which gives $set = "setNomClient";
 
@@ -59,14 +59,14 @@ class Client
         return $this;
     }
 
-    public function getAdressClient()
+    public function getAdresseClient()
     {
-        return $this->adressClient;
+        return $this->adresseClient;
     }
 
-    public function setAdressClient($adressClient)
+    public function setAdresseClient($adresseClient)
     {
-        $this->adressClient = $adressClient;
+        $this->adresseClient = $adresseClient;
         return $this;
     }
 }

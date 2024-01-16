@@ -47,4 +47,10 @@ class MyFct
         echo "</pre>";
     }
 
+    function printr($tableau){
+        echo "<pre>";
+        print_r($tableau);
+        echo "</pre>";
+    }
+
 }

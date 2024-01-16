@@ -25,7 +25,7 @@ $client = new Client();
 $client->setId(2);
 $client->setNumClient('CLT00128');
 $client->setNomClient("SONAM SHERPA");
-$client->setAdressClient("Kathmandu,Nepal");
+$client->setAdresseClient("Kathmandu,Nepal");
 
 printr($client);
 

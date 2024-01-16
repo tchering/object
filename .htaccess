@@ -1,35 +1,9 @@
-    # This .htaccess file is used to rewrite URLs on your website. Here's what each line does:
 
-    # This line enables the runtime rewriting engine, which is necessary for the following rewrite rules to work.
 RewriteEngine On
-    # This line is a condition for the rewrite rule that follows. It checks if the requested filename is not an existing regular file (!-f). If the condition is true, the rewrite rule will be applied.
+   
 RewriteCond %{REQUEST_FILENAME} !-f
-    # This line is another condition for the rewrite rule. It checks if the requested filename is not an existing directory (!-d). If the condition is true, the rewrite rule will be applied.
+
 RewriteCond %{REQUEST_FILENAME} !-d
-    # This is the actual rewrite rule. If the conditions above are met (the requested filename is neither an existing file nor an existing directory), the server will redirect the request to index.php, passing the original request as a parameter (path). The ^(.*)$ part is a regular expression that matches any request.
+
 RewriteRule ^(.*)$ index.php?path=$1 
-    # In summary, this .htaccess file is used to implement a "front controller" pattern, a common pattern in web development where all requests are routed through a single file. This is often used in PHP applications to create clean URLs or to route all requests through a single PHP file.
-
-#         Here's how it works in your project:
-
-#1 A user makes a request to your website, for example, http://yourwebsite.com/article.
-
-#2 The server receives the request and the .htaccess file comes into play. It checks if there is an actual file or directory named article (RewriteCond %{REQUEST_FILENAME} !-f and RewriteCond %{REQUEST_FILENAME} !-d). In this case, there isn't.
-
-#3 Since there is no file or directory named article, the RewriteRule is applied. The request is internally redirected to index.php, with path=article (RewriteRule ^(.*)$ index.php?path=$1).
-
-#4 Inside your index.php file, you can access $_GET['path'] to get the original request (article in this case). You can then include the appropriate controller based on this value. For example:
-
-# <?php
-# $path = $_GET['path'];
-
-# switch ($path) {
-#     case 'article':
-#         include 'Controller/ArticleController.php';
-#         break;
-#     // other cases...
-# }
-
-#5 The ArticleController.php file is included and executed. This file should contain the logic to handle the request, such as querying the database for articles and including the appropriate view to display them.
-
-# This is a simplified example and your actual code might be more complex, especially if you're using a framework or a router library. But the basic idea is the same: all requests are routed through index.php, which includes the appropriate controller based on the request.
+   
