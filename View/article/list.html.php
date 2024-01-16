@@ -51,7 +51,7 @@
                     <td class="w40">${article.designation} </td>
                     <td class="w10">${article.prixUnitaire}</td>
                     <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
-                        <button class="btn btn-sm btn-success">Afficher</button>
+                        <a href="article&action=show&id=${article.id}" class="btn btn-sm btn-success">Afficher</a>
                         <button class="btn btn-sm btn-danger">Supprimer</button>
                         <button class="btn btn-sm btn-primary">Modifier</button>
                     </td>

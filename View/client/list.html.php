@@ -15,10 +15,13 @@
 </style>
 <div class="">
     <h1 class="titre center text-light">Liste Client</h1>
+    <div class="div_btn">
+        <a href="client&action=insert" class="btn btn-md btn-success mb-2 print-none">Ajourter Client</a>
+        <a href="javascript:window.print()" class="btn btn-md btn-primary mb-2 print-none">Imprimer</a>
+    </div>
     <table class="table w100">
         <thead id="thead_art">
             <tr class="bg-success">
-
                 <th class="w20">CODE</th>
                 <th class="w20">N° CLIENT</th>
                 <th class="w40">NOM</th>
@@ -26,8 +29,7 @@
                 <th class="w20">ACTION</th>
             </tr>
         </thead>
-        <tbody id="tbody_art" class="">
-        </tbody>
+        <tbody id="tbody_art" class=""></tbody>
         <tfoot id="tfoot_art">
             <tr>
                 <th colspan="5" class="text-center bg-success" id="nbre_art">Nombre article...</th>
@@ -43,22 +45,28 @@
         let template = clients.map((client) => {
             return `
                 <tr>
-                    <td class = "w10"> ${client.id}</td>
-                    <td class = "w20">${client.numClient}</td>
-                    <td class = "w40">${client.nomClient}</td>
-                    <td class = "w10">${client.adresseClient}</td>
-                    <td class=" w20 buttons gap-sm-2  d-flex justify-content-between">
-                    
-                    <a href ="client&action=show&id=${client.id}" class="btn btn-sm btn-success">Afficher</a>
-                        <button class="btn btn-sm btn-primary">Modifier</button>
-                        <button class="btn btn-sm btn-danger">Supprimer</button>
+                    <td class="w10">${client.id}</td>
+                    <td class="w20">${client.numClient}</td>
+                    <td class="w40">${client.nomClient}</td>
+                    <td class="w10">${client.adresseClient}</td>
+                    <td class="w20 buttons gap-sm-2 d-flex justify-content-between">
+                        <a href="client&action=show&id=${client.id}" class="btn btn-sm btn-success">Afficher</a>
+                        <a href="client&action=update&id=${client.id}" class="btn btn-sm btn-primary">Modifier</a>
+                        <button class="btn btn-sm btn-danger" onclick="supprimer(${client.id})">Supprimer</button>
                     </td>
                 </tr>
-            `
+            `;
         }).join('');
         tbody_art.innerHTML = template;
         let nbre = `Total Clients: ${clients.length}`;
         nbre_art.innerHTML = nbre;
     }
     afficher(clients);
+
+    function supprimer(id) {
+        const response = confirm("Voulez-vous bien supprimer ce client?");
+        if (response) {
+            document.location.href = `client&action=delete&id=${id}`;
+        }
+    }
 </script>

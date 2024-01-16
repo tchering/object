@@ -33,7 +33,7 @@
 
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-md bg-dark text-light fixed-top">
+        <nav class="navbar navbar-expand-md bg-dark text-light fixed-top print-none">
             <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
             <div class="collapse navbar-collapse justify-content-between" id="nav">
@@ -84,7 +84,7 @@
         </nav>
         <div class="row">
 
-            <div id="aside-left" class="col-md-3 bg_green">
+            <div id="aside-left " class="col-md-3 bg_green print-none">
                 <div class="center" id="logo">
                     <img src="./Public/img/Logo_Afpa.jpg" width="100%" alt="" class="my-4">
                 </div>

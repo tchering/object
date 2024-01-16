@@ -17,4 +17,8 @@ class ClientManager extends Manager{
         $result = $this->listTable('client');
         return $result;
     }
+    public function deleteById($id){
+        $result = $this->deleteByIdTable('client',$id);
+        return $result;
+    }
 }

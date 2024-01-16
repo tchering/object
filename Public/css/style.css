@@ -31,12 +31,25 @@
   display: flex;
   justify-content: space-between;
 }
+.form{
 
+}
+.form-container{
+  background-color: wheat;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgb(0, 0, 0);
+  color: black;
+  min-height: 200px;
+}
 /*-----------------------ECF--------------------*/
 @media print {
   nav,
   footer {
     display: none !important;
+  }
+  .print-none{
+    display:none !important;
   }
 }
 @media screen and (max-width: 450px) {
