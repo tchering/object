@@ -31,6 +31,7 @@ class ClientController extends MyFct
             case 'delete':
                 $this->deleteClient($id);
                 break;
+                //!search function is here
             case 'search':
                 $this->searchClient($mot);
                 break;

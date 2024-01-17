@@ -70,7 +70,7 @@
             document.location.href = `client&action=delete&id=${id}`;
         }
     }
-
+//! function search is called via javascript;
     function chercher(){
         document.location.href="client&action=search&mot="+mot.value;
     }

@@ -59,7 +59,7 @@
                 </ul>
                 <div action="">
                     <div class="input-group">
-                        <input onKeyDown="touche(event)" id="mot" name="mot" type="text" class="form-control mx-2" placeholder="Mot à chercher">
+                        <input autocomplete="off" onKeyDown="touche(event)" id="mot" name="mot" type="text" class="form-control mx-2" placeholder="Mot à chercher">
                         <a href="javascript:chercher()" class="btn bg-light"><i class="fa fa-search"></i></a>
                         <a href="" class="mx-2 dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-bell text-light fa-2x"></i><sup class="text-light">(5)</sup></a>
                         <ul class="dropdown-menu w100 bg_green">
