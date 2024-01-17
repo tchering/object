@@ -25,11 +25,14 @@ class ClientController extends MyFct
                 $this->insertClient();
                 break;
             case 'save': //this is defined in form.html.php 
-                //!when case save is called then it execure saveClient function
-                $this->saveClient($_POST); //here the data is sent via post method so there is post
+                //todo A:when case save is called then it execute saveClient function
+                $this->saveClient($_POST); //!here the data is sent via post method so there is post
                 break;
             case 'delete':
                 $this->deleteClient($id);
+                break;
+            case 'search':
+                $this->searchClient($mot);
                 break;
         }
     }
@@ -37,6 +40,17 @@ class ClientController extends MyFct
     //!---------------------My Functions
 
     //! here all the data passed via url are stored inside $data.
+    function searchClient($mot){
+        $cm = new ClientManager();
+        $columnLikes=['numClient','nomClient','adresseClient'];
+       $clients=$cm->search($columnLikes,$mot);
+       $variables = [
+        'clients'=>$clients,
+        'nbre'=>count($clients),
+       ];
+       $file ="View/client/list.html.php";
+       $this->generatePage($file,$variables);
+    }
     function deleteClient($id)
     {
         $cm = new ClientManager();
@@ -59,31 +73,28 @@ class ClientController extends MyFct
     }
     function saveClient($data)
     {
+        //todo B: ClientManager is instantiate to have access to database connection.
         $cm = new ClientManager();
         $connexion = $cm->connexion();
         extract($data);
-        //!once extracted the $data becomes 
+        //todo C: extract will transform $data in associative array with key and values.
+        //todo once extracted the $data becomes 
         // $data = [
         //     'id'=>1,
         //     'numClient'=>'CL001',
         //     'nomClient'=>'Sonam Sherpa',
         //     'adresseClient'=>'Avignon'
         // ];
-        //! These variables are then used in the SQL queries to update or insert a client record in the database.
+        //todo D: Now there is 2 case if id !=0 then it will call the update($data,$id); else insert.In our case update is called
         $id = (int) $id; //transformation de $id en integer entier
         if ($id != 0) {   // cas modification
-            $sql = "update client set numClient=?,nomClient=?,adresseClient=? where id=?";
-            // since we use connection from ClientManager class we instanciate ClientManager.
-            $requete = $connexion->prepare($sql);
-            $requete->execute([$numClient, $nomClient, $adresseClient, $id]);
-        } else {    //cas pour insertion nouvelle données.
-            $sql = "insert into client(numClient,nomClient,adresseClient) values (?,?,?)";
-            $requete = $connexion->prepare($sql);
-            $requete->execute([$numClient, $nomClient, $adresseClient]);
+            //!The function update is called here from ClientManager.   
+            //todo E: Now inside param the extracted $data and $id are sent with it. Check ClientManager function update.  
+            $cm->update($data, $id);
+        } else {
+            //! The function insert is called here from ClientManager.
+            $cm->insert($data);
         }
-        //?Redirection vers page list client.
-        //?this is test comment.
-        //sqlkfjqlskdjfqsdf
         header('location:client');
     }
     function updateClient($id)

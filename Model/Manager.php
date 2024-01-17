@@ -3,7 +3,104 @@ require_once("config/parametre.php");
 
 class Manager
 {
-   public function getDescribeTable($table)
+    //!----------New function search table is created here---------------------------------------
+    public function searchTable($table, $columnLikes, $mot)
+    {
+        $connexion = $this->connexion();
+        $condition = "";
+        $values = [];
+        foreach ($columnLikes as $value) {
+            $condition .= ($condition == "") ? "$value like ?" : " or $value like ?";
+            $values[] = "%$mot%";
+            // if($condition==""){
+            //     $condition.='$value like ?';
+            // }
+        }
+        $sql = "select * from $table where $condition";
+        //!--------test-------------------
+        // echo $sql;
+        // MyFct::sprintr($values);
+        //!---------------------------------
+        $requete = $connexion->prepare($sql);
+        $requete->execute($values);
+        $resultat=$requete->fetchAll(pdo::FETCH_ASSOC);
+        return $resultat;
+    }
+
+
+
+    //!---------- New function to update table is created here to not use sql in clientController
+
+    //todo G:In our case client In this updateTable we know $table is client,$data is [array] and $id=1
+    // insert into client(numClient,nomClient,adresseClient) values (?,?,?);
+    //?            $table,           $column                 $values   $pi
+    public function updateTable($table, $data, $id)
+    //todo we have $data = ['id'=>1,'numClient'='CL001','nomClient'='Sonam Sherpa','adresseClient'='Avignon'];
+    {
+        $connexion = $this->connexion();
+        $column = ""; //here column and $values are variable where we will store the column and values.
+        $values = [];
+        foreach ($data as $key => $value) {
+            if ($key != 'id') {
+                //$column.=($column=="")?"$key=?":",$key=?"; //! ternary operator
+                if ($column == "") {
+                    $column .= "$key=?"; //.= appends right side operands to left side operand
+                    //! now first loop gives $column='numclient=?'
+                } else {
+                    //! if not empty it push next value.
+                    $column .= ",$key=?";
+                }
+                $values[] = $value; //!here this like push in js.$value is pushed in $values=[];
+                //! here first loop gives $values[] = 'CL001';
+                //todo The loop iterates 3 times in our case and after loop terminate,we get
+                //?$column = "numClient=?,nomClient=?,adresseClient=?"
+                //? $values = ['CL001', 'Sonam Sherpa', 'Avignon'].
+            }
+        }
+        //todo H:Now it construct sql statements.
+        $sql = "update $table set $column where id=?";
+        $values[] = $id; //here value of  $id will be pushed in $values array.
+        $requete = $connexion->prepare($sql);
+        $requete->execute($values);
+    }
+    //!---------- New function insertTable is created here to not use sql in clientController.
+    public function insertTable($table, $data)
+    {
+        // $data = [
+        // 'id'=>,
+        // 'numClient'=>'CLT001',
+        // 'nomClient'=>'Sherpa',
+        // 'adresseClient'=>'Paris',
+        // ];
+        // insert into client(numClient,nomClient,adresseClient) values (?,?,?);
+        //?            $table,           $column                 $values   $pi
+        //!---initialization de variables.
+        $connexion = $this->connexion();
+        $column = "";
+        $pi = ""; // les point d'interrogation
+        $values = []; // this is value when user will insert data will is associative array.
+        //!we we generate request sql.
+        foreach ($data as $key => $value) {
+            if ($key != 'id') {
+                if ($column == "") {
+                    $column .= $key;
+                    $pi .= "?";
+                } else {
+                    $column .= ",$key";
+                    $pi .= ",?";
+                }
+                $values[] = $value;
+            }
+        }
+        $sql = "insert into $table($column) values ($pi)";
+        //!this is to test .the data is passed in demo.php
+        // MyFct::sprintr($sql);
+        // MyFct::sprintr($values); die;
+        $requete = $connexion->prepare($sql);
+        $requete->execute($values);
+    }
+
+    public function getDescribeTable($table)
     {
         $connexion = $this->connexion();
         $sql = "desc $table";  // requete pour affichage de la structure la table collaborateur
@@ -51,12 +148,12 @@ class Manager
         return true;
     }
 
-//    public function printr($tableau)
-//     {
-//         echo "<pre>";
-//         print_r($tableau);
-//         echo "</pre>";
-//     }
+    //    public function printr($tableau)
+    //     {
+    //         echo "<pre>";
+    //         print_r($tableau);
+    //         echo "</pre>";
+    //     }
     function listTable($nomTable)
     {
         $sql = "select * from $nomTable";
@@ -66,5 +163,4 @@ class Manager
         $tables = $requete->fetchAll(pdo::FETCH_ASSOC);
         return $tables;
     }
-
 }

@@ -6,12 +6,9 @@ class Client
     private $numClient;
     private $nomClient; // Corrected variable name
     private $adresseClient;
-
+//! for the function update and insert is independant so construct wont affect it .
     public function __construct($data = [])
     {
-        // explanation $data = [
-        // 'nomClient'=>'Sherpa';
-        // ];
         if ($data) {
             foreach ($data as $key => $value) {
                 // Creation of set function

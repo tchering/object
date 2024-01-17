@@ -39,7 +39,8 @@
 </div>
 
 <script>
-    let clients = <?= $clients ?>
+    //! I transformed in json_encode because without it was not working for search method.
+    let clients = <?= json_encode($clients) ?>
 
     function afficher(tableName) {
         let template = clients.map((client) => {
@@ -68,5 +69,17 @@
         if (response) {
             document.location.href = `client&action=delete&id=${id}`;
         }
+    }
+
+    function chercher(){
+        document.location.href="client&action=search&mot="+mot.value;
+    }
+    //! when enter key is pressed the chercher() is called.
+    function touche(event){
+        document.getElementById('mot').addEventListener('keydown',(event) => {
+            if(event.key === "Enter"){
+                chercher();
+            }
+        })
     }
 </script>
