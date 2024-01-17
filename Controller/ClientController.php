@@ -83,6 +83,7 @@ class ClientController extends MyFct
         }
         //?Redirection vers page list client.
         //?this is test comment.
+        //sqlkfjqlskdjfqsdf
         header('location:client');
     }
     function updateClient($id)
