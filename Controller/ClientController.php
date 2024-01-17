@@ -82,6 +82,7 @@ class ClientController extends MyFct
             $requete->execute([$numClient, $nomClient, $adresseClient]);
         }
         //?Redirection vers page list client.
+        //?this is test comment.
         header('location:client');
     }
     function updateClient($id)
