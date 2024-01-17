@@ -40,17 +40,19 @@ class ClientController extends MyFct
 
     //!---------------------My Functions
 
-    //! here all the data passed via url are stored inside $data.
-    function searchClient($mot){
+    //! here the $value of mot is stored inside mot once extracted from $get
+
+    function searchClient($mot)
+    {
         $cm = new ClientManager();
-        $columnLikes=['numClient','nomClient','adresseClient'];
-       $clients=$cm->search($columnLikes,$mot);
-       $variables = [
-        'clients'=>$clients,
-        'nbre'=>count($clients),
-       ];
-       $file ="View/client/list.html.php";
-       $this->generatePage($file,$variables);
+        $columnLikes = ['numClient', 'nomClient', 'adresseClient'];
+        $clients = $cm->search($columnLikes, $mot);
+        $variables = [
+            'clients' => $clients,
+            'nbre' => count($clients),
+        ];
+        $file = "View/client/list.html.php";
+        $this->generatePage($file, $variables);
     }
     function deleteClient($id)
     {
@@ -72,6 +74,7 @@ class ClientController extends MyFct
         $file = "View/client/form.html.php";
         $this->generatePage($file, $variables);
     }
+    //! here all the data passed via url are stored inside $data.
     function saveClient($data)
     {
         //todo B: ClientManager is instantiate to have access to database connection.
