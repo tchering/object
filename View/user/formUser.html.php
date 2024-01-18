@@ -20,9 +20,9 @@
         <!-- this is multiple selection -->
         <div class="line-input my-2">
             <label for="roles" class="lap30">ROLES</label>
-            <select class="w60 form-control" id="roles" name="roles[]">
+            <select class="w60 form-control" id="roles" name="roles[]" multiple>
                 <?php foreach ($roles as $role) : ?>
-                    <option value="<?= $role ?>" selected><?=$role?></option>
+                    <option value="<?= $role['libelle'] ?>" <?= $role['selected'] ?>><?= $role['libelle'] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

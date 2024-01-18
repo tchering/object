@@ -14,6 +14,7 @@ class MyFct
             extract($variables);
             ob_start();   // Ouvrir   la memoire tampon pour contenir lfichier $file à transformer en texte
             require($file);
+            
             $content = ob_get_clean();
             //------------
             //---Ouvrir à nouveau la memoire tampon pour recevoir le fichier $base avec la variable $content

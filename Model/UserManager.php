@@ -22,7 +22,11 @@ class UserManager extends Manager
     {
         return $this->getDescribeTable('user');
     }
-    public function findById($id, $type = "object")
+
+    //! in our case $id = 1
+    //! Now findById calls another func findByIdTable with 'user'
+    //! User is instantiated to have getter setter value.
+    public function findById($id, $type = "object") 
     {
         $resultat = $this->findByIdTable('user', $id);
         if ($type) {
