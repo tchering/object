@@ -55,6 +55,7 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item"><a href="user" class="nav-link text-light fw-bold">User</a></li>
                     <li class="nav-item"><a href="" class="nav-link text-light fw-bold">Parametre</a></li>
                 </ul>
                 <div action="">

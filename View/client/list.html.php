@@ -40,8 +40,10 @@
 
 <script>
     //! I transformed in json_encode because without it was not working for search method.
-    let clients = <?= json_encode($clients) ?>
-
+    let clients = <?=$clients?>
+    // alert("ok");
+    afficher(clients);
+    
     function afficher(tableName) {
         let template = clients.map((client) => {
             return `
@@ -62,7 +64,8 @@
         let nbre = `Total Clients: ${clients.length}`;
         nbre_art.innerHTML = nbre;
     }
-    afficher(clients);
+
+    
 //!here we wrote function instead of writing like this <a href="client&action=delete&id=${client.id}" because we want to show confirmation before delete
     function supprimer(id) {
         const response = confirm("Voulez-vous bien supprimer ce client?");
