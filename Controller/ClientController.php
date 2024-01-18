@@ -45,8 +45,8 @@ class ClientController extends MyFct
     function searchClient($mot)
     {
         $cm = new ClientManager();
-        $columnLikes = ['numClient', 'nomClient', 'adresseClient'];
-        $clients = $cm->search($columnLikes, $mot);
+        $keys = ['numClient', 'nomClient', 'adresseClient'];
+        $clients = $cm->search($keys, $mot);
         $variables = [
             'clients' => $clients,
             'nbre' => count($clients),

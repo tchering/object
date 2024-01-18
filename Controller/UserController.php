@@ -10,6 +10,7 @@ class UserController extends MyFct
                 $this->listUser();
                 break;
             case "insert":
+                $this->insertUser();
                 break;
             case "update":
                 //! A lets say user want to modify id 1. now 1 is stored in $id and updateUser is called
@@ -19,16 +20,64 @@ class UserController extends MyFct
                 $this->showUser($id);
                 break;
             case "delete":
+                $this->deleteUser($id);
                 break;
             case 'save': //this is defined in form.html.php 
                 $this->saveUser($_POST); //!here the data is sent via post method so there is post
                 break;
             case "search":
+                $this->searchUser($mot);
                 break;
         }
     }
 
-    // My functions 
+    // My functions
+    function searchUser($mot){
+        $um = new UserManager();
+        $keys = ['id','username,roles'];
+        $um->search($keys,$mot);
+        $variables = [
+        
+        ];
+        $files="View/user/listUser.html.php";
+        $this->generatePage($files,$variables);
+    }
+    //todo------------------------------------- DeleteUser----------------------------------
+    function deleteUser($id){
+        $um = new UserManager();
+        $um->deleteById($id);
+        header('location:user');
+        exit;
+    }
+     //todo------------------------------------- InsertUser----------------------------------
+    function insertUser()
+    {
+        //---role---------
+        $rm = new RoleManager();
+        $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
+        //? [
+        //?     ['id' => 1, 'rang' => '001', 'libelle' => 'ROLE_ADMIN'],
+        //?     ['id' => 2, 'rang' => '002', 'libelle' => 'ROLE_ASSISTANT'],
+        //?     ['id' => 3, 'rang' => '003', 'libelle' => 'ROLE_DEV'],
+        //?     ['id' => 4, 'rang' => '004', 'libelle' => 'ROLE_USER']
+        //? ]
+        $roles = [];
+        foreach ($myRoles as $myRole) {
+            $libelle = $myRole['libelle'];
+            $selected = ""; // Set selected to empty initially
+            $roles[] = ['libelle' => $libelle, 'selected' => $selected];
+        }
+        $variables = [
+            'id' => "",
+            'username' => "",
+            'email' => "",
+            'password' => "",
+            "roles" => $roles,
+            "disabled" => "",
+        ];
+        $files = "View/user/formUser.html.php";
+        $this->generatePage($files, $variables);
+    }
     //todo------------------------------------- SaveUser----------------------------------
     function showUser($id) //!here id =1
     {
@@ -191,6 +240,7 @@ class UserController extends MyFct
         }
         $variables = [
             'listUsers' => $listUsers,
+            'nbre'=>count($listUsers)
         ];
         $files = "View/user/listUser.html.php";
         $this->generatePage($files, $variables);

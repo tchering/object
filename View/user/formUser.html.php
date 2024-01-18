@@ -6,7 +6,7 @@
             <input type="text" class="from-control w50" id="id" name="id" value="<?= $id ?>" <?= $disabled ?>>
         </div>
         <div class="line-input">
-            <label for="username" class="lab30 obligatoire">Code</label>
+            <label for="username" class="lab30 obligatoire">USERNAME</label>
             <input type="text" class="from-control w50" id="username" name="username" value="<?= $username ?>" <?= $disabled ?>>
         </div>
         <div class="line-input my-2">

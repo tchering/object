@@ -3,29 +3,57 @@ require_once("config/parametre.php");
 
 class Manager
 {
-    //!----------New function search table is created here---------------------------------------
-    public function searchTable($table, $columnLikes, $mot)
+    // !----------New function search table is created here---------------------------------------
+    // public function searchTable($table, $columnLikes, $mot)
+    // {
+    //     $connexion = $this->connexion();
+    //     $condition = "";
+    //     $values = [];
+    //     foreach ($columnLikes as $value) {
+    //         $condition .= ($condition == "") ? "$value like ?" : " or $value like ?";
+    //         // if ($condition == "") {
+    //         //     $condition .= "$value like ?";
+    //         // } else {
+    //         //     $condition .= " or $value like ?";
+    //         // }
+    //         $values[] = "%$mot%";
+    //     }
+    //     $sql = "select * from $table where $condition";
+    //     //!--------test-------------------
+    //     // echo $sql;
+    //     // MyFct::sprintr($values);
+    //     //!---------------------------------
+    //     $requete = $connexion->prepare($sql);
+    //     $requete->execute($values);
+    //     $resultat = $requete->fetchAll(pdo::FETCH_ASSOC);
+    //     return $resultat;
+    // }
+
+    function searchTable($table, $keys, $mot)
     {
         $connexion = $this->connexion();
         $condition = "";
-        $values = [];
-        foreach ($columnLikes as $value) {
-            $condition .= ($condition == "") ? "$value like ?" : " or $value like ?";
-            $values[] = "%$mot%";
-            // if($condition==""){
-            //     $condition.='$value like ?';
-            // }
+        $searchQuery = [];
+        
+        // Iterate through the keys to fill the condition and values array
+        foreach ($keys as $key) {
+            if ($condition == "") {
+                $condition .= "$key LIKE ?";
+            } else {
+                $condition .= " OR $key LIKE ?";
+            }
+            $searchQuery[] = "%$mot%";
         }
-        $sql = "select * from $table where $condition";
-        //!--------test-------------------
-        // echo $sql;
-        // MyFct::sprintr($values);
-        //!---------------------------------
+        
+        $sql = "SELECT * FROM $table WHERE $condition";
         $requete = $connexion->prepare($sql);
-        $requete->execute($values);
-        $resultat=$requete->fetchAll(pdo::FETCH_ASSOC);
+        $requete->execute($searchQuery);
+        $resultat=$requete->fetchAll(PDO::FETCH_ASSOC);
         return $resultat;
     }
+
+
+
 
 
 

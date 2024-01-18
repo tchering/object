@@ -2,8 +2,8 @@
 class UserManager extends Manager
 {
     //!------------ Function search is added here.
-    public function search($columnLikes,$mot){
-       return  $this->searchTable('user',$columnLikes,$mot);
+    public function search($keys,$mot){
+       return  $this->searchTable('user',$keys,$mot);
     }
     public function update($data, $id)
     {
@@ -35,7 +35,8 @@ class UserManager extends Manager
     {
         $result = $this->listTable('user');
         return $result;
-    }    public function deleteById($id)
+    }  
+      public function deleteById($id)
     {
         $result = $this->deleteByIdTable('user', $id);
         return $result;
