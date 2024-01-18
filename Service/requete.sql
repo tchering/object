@@ -1,4 +1,4 @@
--- Active: 1704897572558@@127.0.0.1@3306@dwwm_cmfp
+-- Active: 1705612813056@@127.0.0.1@3306@dwwm_cmfp
 --!-------Create Table user---------
 create table user (
     id int auto_increment PRIMARY key,

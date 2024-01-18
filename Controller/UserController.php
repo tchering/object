@@ -32,24 +32,24 @@ class UserController extends MyFct
     }
 
     // My functions
-    function searchUser($mot){
+    function searchUser($mot)
+    {
         $um = new UserManager();
-        $keys = ['id','username,roles'];
-        $um->search($keys,$mot);
-        $variables = [
-        
-        ];
-        $files="View/user/listUser.html.php";
-        $this->generatePage($files,$variables);
+        $keys = ['id', 'username,roles'];
+        $um->search($keys, $mot);
+        $variables = [];
+        $files = "View/user/listUser.html.php";
+        $this->generatePage($files, $variables);
     }
     //todo------------------------------------- DeleteUser----------------------------------
-    function deleteUser($id){
+    function deleteUser($id)
+    {
         $um = new UserManager();
         $um->deleteById($id);
         header('location:user');
         exit;
     }
-     //todo------------------------------------- InsertUser----------------------------------
+    //todo------------------------------------- InsertUser----------------------------------
     function insertUser()
     {
         //---role---------
@@ -215,21 +215,48 @@ class UserController extends MyFct
     {
         $um = new UserManager();
         $users = $um->showAll();
-        $listUsers = [];
-        foreach ($users as $value) {
-            $user = new User($value);
+        //! here all the keys and user from table user is stored in $users.
+        //!Now $users has 
+        //? $users = [
+        //     [
+        //         'id'=>1,
+        //     'username'=>'sherpa',
+        // ],
+        // [
+        //     'id'=>2,
+        //     'username'=>'paul', and so on
+        // ]
+        //? ]
+        $listUsers = []; //!empty array is created to store the processed user data.
+        foreach ($users as $user) {
+            //? The foreach loop begins, taking the first user's data from the $users array.
+            $user = new User($user);
+            //? A new User object is created with this user's data. This gives you access to the User class's methods
+            //?  for this user.Because data of this user is passed in construct $data array.
             $dateCreation = $user->getDateCreation();
             $dateCreation = new DateTime($dateCreation);
             $dateCreation = $dateCreation->format('d/m/Y');
+            //? The user's creation date is retrieved using the getDateCreation() method, converted into a DateTime 
+            //? object, and then formatted into 'd/m/Y' format.
             //!------------Afficher roles en menu deroulant.
-            $roles = json_decode($user->getRoles()); //transformer json en tableau php
+            $roles = json_decode($user->getRoles());
+            //? The user's roles, stored as a JSON string, are decoded into a PHP array using json_decode().
+            //? Now $roles = array("ROLE_ADMIN", "ROLE_ASSIST", "ROLE_DEV", "ROLE_USER")
+            //*json string looks like this '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
 
-            // $json = '{"role_admin", "role_assistant", "role_dev","role_user"}'; //json-string
             $user_role = "<select class='form-select'>";
+            //? A HTML select element is created and stored in $user_role var with the user's roles as options.
             foreach ($roles as $role) {
                 $user_role .= "<option>$role</option>";
+                //after complete loop $user_role = <option>ROLE_ADMIN</option><option>ROLE_ASSIST</option> AND SO ON.
             }
-            $user_role .= "</select>";
+            $user_role .= "</select>"; //? final html looks like this below:
+            // <select class='form-select'>
+            //     <option>ROLE_ADMIN</option>
+            //     <option>ROLE_ASSIST</option>
+            //     <option>ROLE_DEV</option>
+            //     <option>ROLE_USER</option>
+            // </select>
 
             $listUsers[] = [
                 'id' => $user->getId(),
@@ -237,10 +264,12 @@ class UserController extends MyFct
                 'dateCreation' => $dateCreation,
                 'roles' => $user_role,
             ];
+            //? An associative array is created with the user's id, username, formatted creation date, and the HTML select
+            //?  element. This array is then added to the $listUsers array.
         }
         $variables = [
             'listUsers' => $listUsers,
-            'nbre'=>count($listUsers)
+            'nbre' => count($listUsers)
         ];
         $files = "View/user/listUser.html.php";
         $this->generatePage($files, $variables);
