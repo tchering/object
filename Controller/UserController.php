@@ -28,14 +28,30 @@ class UserController extends MyFct
     // My functions 
     function updateUser($id)
     {
+        //---User------
         $um = new UserManager();
         $user = $um->findById($id);
+        $user_roles = json_decode($user->getRoles());
+        //---role---------
+        $rm = new RoleManager();
+        $myRoles = $rm->showAll();
+        $roles = [];
+        foreach ($myRoles as $role) {
+            if (in_array($role, $user_roles)) {
+                $selected = "selected";
+            } else {
+                $selected = "";
+            }
+            $roles[] = [$role, $selected];
+        }
+
+        //------preparation variables------
         $variables = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
             'password' => '',
             'email' => $user->getEmail(),
-            'roles'=>json_decode($user->getRoles()),
+            'roles' => $roles,
             'disabled' => '',
         ];
 
