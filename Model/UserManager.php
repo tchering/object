@@ -1,18 +1,14 @@
 <?php
-
 class UserManager extends Manager
 {
     //!------------ Function search is added here.
     public function search($columnLikes,$mot){
        return  $this->searchTable('user',$columnLikes,$mot);
     }
-    
-
     public function update($data, $id)
     {
         return $this->updateTable('user', $data, $id);
     }
-
     //!New Function insert is added here with table 'user' and $data as param.
     public function insert($data)
     {
@@ -22,7 +18,6 @@ class UserManager extends Manager
     {
         return $this->getDescribeTable('user');
     }
-
     //! in our case $id = 1
     //! Now findById calls another func findByIdTable with 'user'
     //! User is instantiated to have getter setter value.
@@ -40,8 +35,7 @@ class UserManager extends Manager
     {
         $result = $this->listTable('user');
         return $result;
-    }
-    public function deleteById($id)
+    }    public function deleteById($id)
     {
         $result = $this->deleteByIdTable('user', $id);
         return $result;

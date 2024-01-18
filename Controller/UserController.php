@@ -16,6 +16,7 @@ class UserController extends MyFct
                 $this->updateUser($id);
                 break;
             case "show":
+                $this->showUser($id);
                 break;
             case "delete":
                 break;
@@ -28,6 +29,59 @@ class UserController extends MyFct
     }
 
     // My functions 
+    //todo------------------------------------- SaveUser----------------------------------
+    function showUser($id) //!here id =1
+    {
+        //---User------
+        $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
+        $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
+        $user_roles = $user->getRoles();
+        $user_roles = json_decode($user_roles); //!we transform just roles coz email,pass,code is string.
+        //---role---------
+        $rm = new RoleManager();
+        $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
+        //? [
+        //?     ['id' => 1, 'rang' => '001', 'libelle' => 'ROLE_ADMIN'],
+        //?     ['id' => 2, 'rang' => '002', 'libelle' => 'ROLE_ASSISTANT'],
+        //?     ['id' => 3, 'rang' => '003', 'libelle' => 'ROLE_DEV'],
+        //?     ['id' => 4, 'rang' => '004', 'libelle' => 'ROLE_USER']
+        //? ]
+        $roles = [];
+        foreach ($myRoles as $myRole) {
+            $libelle = $myRole['libelle'];
+            if (in_array($libelle, $user_roles)) {
+                $selected = "selected";
+            } else {
+                $selected = "";
+            }
+            $roles[] = ['libelle' => $libelle, 'selected' => $selected];
+        }
+
+        //!this shows only libelle that  user has.
+        // foreach ($myRoles as $myRole) {
+        //     $libelle = $myRole['libelle'];
+        //     if (in_array($libelle, $user_roles)) {
+        //         $selected = "selected";
+        //         $roles[] = ['libelle' => $libelle, 'selected' => $selected];
+        //     }
+        // }
+
+        //------preparation variables------
+        $variables = [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'password' => '************',
+            'email' => $user->getEmail(),
+            'roles' => $roles,
+
+            // 'roles'=>json_decode($user->getRoles()),
+            'disabled' => 'disabled',
+        ];
+
+        $file = "View/user/formUser.html.php";
+        $this->generatePage($file, $variables);
+    }
+
     //todo------------------------------------- SaveUser----------------------------------
     function saveUser($data)
     {
