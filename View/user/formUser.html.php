@@ -15,7 +15,7 @@
         </div>
         <div class="line-input my-2">
             <label for="password" class="lab30 obligatoire">PASSWORD</label>
-            <input type="password" class="from-control w50" id="password" name="password" value="<?=$password?>" <?= $disabled ?>>
+            <input type="password" class="from-control w50" id="password" name="password" value="<?= $password ?>" <?= $disabled ?>required>
         </div>
         <!-- this is multiple selection -->
         <div class="line-input my-2">

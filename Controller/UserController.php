@@ -6,8 +6,14 @@ class UserController extends MyFct
         $action = "list";
         extract($_GET);
         switch ($action) {
+            case 'search':
+                $this->searchUser($mot);
+                break;
             case "list":
                 $this->listUser();
+                break;
+            case "show":
+                $this->showUser($id);
                 break;
             case "insert":
                 $this->insertUser();
@@ -16,77 +22,65 @@ class UserController extends MyFct
                 //! A lets say user want to modify id 1. now 1 is stored in $id and updateUser is called
                 $this->updateUser($id);
                 break;
-            case "show":
-                $this->showUser($id);
+            case 'save':
+                $this->saveUser($_POST);
                 break;
             case "delete":
+                // Assuming there's a deleteUser method
                 $this->deleteUser($id);
                 break;
-            case 'save': //this is defined in form.html.php 
-                $this->saveUser($_POST); //!here the data is sent via post method so there is post
-                break;
-            case "search":
-                $this->searchUser($mot);
-                break;
-        }
+                
+        } // This is the missing closing brace
     }
 
     // My functions
-    function searchUser($mot)
-    {
-        $um = new UserManager();
-        $keys = ['id', 'username,roles'];
-        $um->search($keys, $mot);
-        $variables = [];
-        $files = "View/user/listUser.html.php";
-        $this->generatePage($files, $variables);
-    }
-    //todo------------------------------------- DeleteUser----------------------------------
-    function deleteUser($id)
-    {
-        $um = new UserManager();
-        $um->deleteById($id);
-        header('location:user');
-        exit;
-    }
-    //todo------------------------------------- InsertUser----------------------------------
-    function insertUser()
-    {
-        //---role---------
-        $rm = new RoleManager();
-        $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
-        //? [
-        //?     ['id' => 1, 'rang' => '001', 'libelle' => 'ROLE_ADMIN'],
-        //?     ['id' => 2, 'rang' => '002', 'libelle' => 'ROLE_ASSISTANT'],
-        //?     ['id' => 3, 'rang' => '003', 'libelle' => 'ROLE_DEV'],
-        //?     ['id' => 4, 'rang' => '004', 'libelle' => 'ROLE_USER']
-        //? ]
-        $roles = [];
-        foreach ($myRoles as $myRole) {
-            $libelle = $myRole['libelle'];
-            $selected = ""; // Set selected to empty initially
-            $roles[] = ['libelle' => $libelle, 'selected' => $selected];
+      //todo------------------------------------- SearchUser----------------------------------
+      function searchUser($mot)
+{
+    $um = new UserManager();
+    $keys = ['username'];
+    $users = $um->search($keys, $mot);
+
+    $listUsers = []; // Initialize an empty array to store user data
+
+    foreach ($users as $user) {
+        // Create a User object for each user in the result
+        $userObject = new User($user);
+
+        $dateCreation = $userObject->getDateCreation();
+        $dateCreation = new DateTime($dateCreation);
+        $dateCreation = $dateCreation->format('d/m/Y');
+
+        $roles = json_decode($userObject->getRoles());
+        $role_title = implode(" - ", $roles);
+
+        $user_role = "<select class='form-select' title ='$role_title'> ";
+        foreach ($roles as $role) {
+            $user_role .= "<option>$role</option>";
         }
-        $variables = [
-            'id' => "",
-            'username' => "",
-            'email' => "",
-            'password' => "",
-            "roles" => $roles,
-            "disabled" => "",
+        $user_role .= "</select>";
+
+        $listUsers[] = [
+            'id' => $userObject->getId(),
+            'username' => $userObject->getUsername(),
+            'dateCreation' => $dateCreation,
+            'roles' => $user_role,
         ];
-        $files = "View/user/formUser.html.php";
-        $this->generatePage($files, $variables);
     }
-    //todo------------------------------------- SaveUser----------------------------------
-    function showUser($id) //!here id =1
+
+    $variables = [
+        'listUsers' => $listUsers,
+        'nbre' => count($listUsers)
+    ];
+
+    $files = "View/user/listUser.html.php";
+    $this->generatePage($files, $variables);
+}
+
+     //todo-------------------------- GenerateFormUser----------------------------------
+    function generateFormUser($user, $disabled)
     {
-        //---User------
-        $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
-        $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
         $user_roles = $user->getRoles();
-        $user_roles = json_decode($user_roles); //!we transform just roles coz email,pass,code is string.
-        //---role---------
         $rm = new RoleManager();
         $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
         //? [
@@ -105,16 +99,6 @@ class UserController extends MyFct
             }
             $roles[] = ['libelle' => $libelle, 'selected' => $selected];
         }
-
-        //!this shows only libelle that  user has.
-        // foreach ($myRoles as $myRole) {
-        //     $libelle = $myRole['libelle'];
-        //     if (in_array($libelle, $user_roles)) {
-        //         $selected = "selected";
-        //         $roles[] = ['libelle' => $libelle, 'selected' => $selected];
-        //     }
-        // }
-
         //------preparation variables------
         $variables = [
             'id' => $user->getId(),
@@ -124,11 +108,44 @@ class UserController extends MyFct
             'roles' => $roles,
 
             // 'roles'=>json_decode($user->getRoles()),
-            'disabled' => 'disabled',
+            'disabled' => $disabled,
         ];
 
         $file = "View/user/formUser.html.php";
         $this->generatePage($file, $variables);
+    }
+  
+    //todo------------------------------------- DeleteUser----------------------------------
+    function deleteUser($id)
+    {
+        $um = new UserManager();
+        $um->deleteById($id);
+        header('location:user');
+        exit;
+    }
+
+    //todo------------------------------------- InsertUser----------------------------------
+    function insertUser()
+    {
+        //---role---------
+        $user = new User();
+        $user->setRoles(['ROLE_USER']); //! minimum user created should have one role 
+        $user_roles = $user->getRoles();
+        $disabled = "";
+        $this->generateFormUser($user, $disabled);
+    }
+
+    //todo------------------------------------- ShowUser----------------------------------
+    function showUser($id) //!here id =1
+    {
+        //---User------
+        $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
+        $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
+        $user_roles = $user->getRoles();
+        $user_roles = json_decode($user_roles);
+        $user->setRoles($user_roles); //!we transform just roles coz email,pass,code is string.
+        $disabled = "disabled";
+        $this->generateFormUser($user, $disabled);
     }
 
     //todo------------------------------------- SaveUser----------------------------------
@@ -138,18 +155,11 @@ class UserController extends MyFct
         $um = new UserManager();
         $connexion = $um->connexion();
         extract($data);
-        // $data = [
-        //     'id'=>1,
-        //     'email'=>'CL001',
-        //     'password'=>'Sonam Sherpa',
-        //     'roles'=>([0]=>ROLE_admin [1]=>role_dev ,[2]=>role_user) before transforming string roles in array
-        // ];
+
         $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
         //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
         $data['password'] = sha1($data['password']); //crypting password
-
         //  $this->printr($data);die;// this will print the changed result after validing.!!imp
-
         $id = (int) $id; //transformation de $id en integer entier
         if ($id != 0) {   // cas modification
             $um->update($data, $id);
@@ -158,58 +168,20 @@ class UserController extends MyFct
         }
         header('location:user');
     }
-    //todo------------------------------------- updateUser----------------------------------
+
+    //todo------------------------------------- updateUserModifiedVerson----------------------------------
     function updateUser($id) //!here id =1
     {
         //---User------
         $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
         $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
         $user_roles = $user->getRoles();
-        $user_roles = json_decode($user_roles); //!we transform just roles coz email,pass,code is string.
-        //---role---------
-        $rm = new RoleManager();
-        $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
-        //? [
-        //?     ['id' => 1, 'rang' => '001', 'libelle' => 'ROLE_ADMIN'],
-        //?     ['id' => 2, 'rang' => '002', 'libelle' => 'ROLE_ASSISTANT'],
-        //?     ['id' => 3, 'rang' => '003', 'libelle' => 'ROLE_DEV'],
-        //?     ['id' => 4, 'rang' => '004', 'libelle' => 'ROLE_USER']
-        //? ]
-        $roles = [];
-        foreach ($myRoles as $myRole) {
-            $libelle = $myRole['libelle'];
-            if (in_array($libelle, $user_roles)) {
-                $selected = "selected";
-            } else {
-                $selected = "";
-            }
-            $roles[] = ['libelle' => $libelle, 'selected' => $selected];
-        }
-
-        //!this shows only libelle that  user has.
-        // foreach ($myRoles as $myRole) {
-        //     $libelle = $myRole['libelle'];
-        //     if (in_array($libelle, $user_roles)) {
-        //         $selected = "selected";
-        //         $roles[] = ['libelle' => $libelle, 'selected' => $selected];
-        //     }
-        // }
-
-        //------preparation variables------
-        $variables = [
-            'id' => $user->getId(),
-            'username' => $user->getUsername(),
-            'password' => '',
-            'email' => $user->getEmail(),
-            'roles' => $roles,
-
-            // 'roles'=>json_decode($user->getRoles()),
-            'disabled' => '',
-        ];
-
-        $file = "View/user/formUser.html.php";
-        $this->generatePage($file, $variables);
+        $user_roles = json_decode($user_roles);
+        $user->setRoles($user_roles); //!we transform just roles coz email,pass,code is string.
+        $disabled = "";
+        $this->generateFormUser($user, $disabled);
     }
+
     //todo------------------------------------- listUser----------------------------------
     function listUser()
     {
@@ -240,11 +212,13 @@ class UserController extends MyFct
             //? object, and then formatted into 'd/m/Y' format.
             //!------------Afficher roles en menu deroulant.
             $roles = json_decode($user->getRoles());
+
+            $role_title = implode(" - ", $roles); //transform the table $role in text with 
             //? The user's roles, stored as a JSON string, are decoded into a PHP array using json_decode().
             //? Now $roles = array("ROLE_ADMIN", "ROLE_ASSIST", "ROLE_DEV", "ROLE_USER")
             //*json string looks like this '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
 
-            $user_role = "<select class='form-select'>";
+            $user_role = "<select class='form-select'  title ='$role_title'> ";
             //? A HTML select element is created and stored in $user_role var with the user's roles as options.
             foreach ($roles as $role) {
                 $user_role .= "<option>$role</option>";
