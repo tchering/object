@@ -94,10 +94,13 @@ class UserController extends MyFct
             $libelle = $myRole['libelle'];
             if (in_array($libelle, $user_roles)) {
                 $selected = "selected";
+                //!added check box here
+                $checked="checked";
             } else {
                 $selected = "";
+                $checked="";
             }
-            $roles[] = ['libelle' => $libelle, 'selected' => $selected];
+            $roles[] = ['libelle' => $libelle, 'selected' => $selected,'checked'=>$checked];
         }
         //------preparation variables------
         $variables = [
