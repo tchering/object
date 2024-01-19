@@ -51,12 +51,6 @@ class Manager
         $resultat=$requete->fetchAll(PDO::FETCH_ASSOC);
         return $resultat;
     }
-
-
-
-
-
-
     //!---------- New function to update table is created here to not use sql in clientController
 
     //todo G:In our case client In this updateTable we know $table is client,$data is [array] and $id=1
