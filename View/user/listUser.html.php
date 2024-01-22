@@ -68,9 +68,9 @@
                     <td class="w20">${user.dateCreation}</td>
                     <td class="w30">${user.roles}</td>
                     <td class="w30 buttons gap-sm-2 d-flex justify-content-between">
-                        <a href="user&action=show&id=${user.id}" class="btn btn-sm btn-success">Afficher</a>
-                        <a href="user&action=update&id=${user.id}" class="btn btn-sm btn-primary">Modifier</a>
-                        <button class="btn btn-sm btn-danger" onclick="supprimer(${user.id})">Supprimer</button>
+                        <a href="user&action=show&id=${user.id}" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                        <a href="user&action=update&id=${user.id}" class="btn btn-sm btn-primary"><i class="fa-solid fa-gear"></i></a>
+                        <button class="btn btn-sm btn-danger" onclick="supprimer(${user.id})"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `;

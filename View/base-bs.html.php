@@ -32,8 +32,10 @@
 </head>
 
 <body>
+    <!-- <?php print_r($_SESSION);?> -->
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-md bg-dark text-light fixed-top print-none">
+
+        <nav class="navbar navbar-expand-md <?=$_SESSION['bg_navbar']?> text-light fixed-top print-none">
             <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
             <div class="collapse navbar-collapse justify-content-between" id="nav">
@@ -55,8 +57,18 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a href="user" class="nav-link text-light fw-bold">User</a></li>
-                    <li class="nav-item"><a href="" class="nav-link text-light fw-bold">Parametre</a></li>
+                    <!-- <li class="nav-item"><a href="user" class="nav-link text-light fw-bold">User</a></li> -->
+                    <!-- <li class="nav-item"><a href="" class="nav-link text-light fw-bold">Parametre</a></li> -->
+                    <!-- Here the dropdown is added with user,role  -->
+                    <li class="nav-item dropdown"><a href="" class="nav-link text-primary text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown">Parametre</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a href="user" class="nav-link">User</a></li>
+                                    <li class="nav-item"><a href="roles" class="nav-link">Role</a></li>
+                                </ul>
+                            </li>
+                            <!-- Here connect and desconnet is added aswell -->
+                            <li class="nav-item"><a href="user&action=login" class="nav-link text-light fw-bold">Se connecter</a></li>
+                            <li class="nav-item"><a href="user&action=logout" class="nav-link text-light fw-bold">Se deconnecter</a></li>
                 </ul>
                 <div action="">
                     <div class="input-group">
@@ -103,7 +115,7 @@
                     <li><a href="">Fermerture</a></li>
                 </ul>
             </div>
-            <div id="section-bs" class="col-md-9 bg_blue">
+            <div id="section-bs" class="col-md-9 bg-primary">
                 <?= $content ?>
             </div>
         </div>
