@@ -29,8 +29,8 @@
                 <th class="w30">ACTION</th>
             </tr>
         </thead>
-        <tbody id="tbody_art" class="">
-           //! <!------------------------------------method php ---------------------->
+        <tbody id="tbody_art" class=" w-100">
+           <!------------------------------------method php -------------------- -->
             <!-- <?php foreach($listUsers as $user):?>
             <tr>
                <td class="w10"><?=$user['id']?></td>
@@ -44,7 +44,7 @@
                </td>
             </tr>
             <?php endforeach; ?> -->
-            //!<!--------------------------------method php ends here ---------------------->
+            <!--------------------------------method php ends here ---------------------->
         </tbody>
         <tfoot id="tfoot_art">
             <tr>
@@ -62,7 +62,7 @@
     function afficher(tableName) {
         let template = tableName.map((user) => {
             return `
-                <tr>
+                <tr class ="">
                     <td class="w10">${user.id}</td>
                     <td class="w10">${user.username}</td>
                     <td class="w20">${user.dateCreation}</td>
