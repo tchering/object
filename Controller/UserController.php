@@ -29,58 +29,58 @@ class UserController extends MyFct
                 // Assuming there's a deleteUser method
                 $this->deleteUser($id);
                 break;
-                
         } // This is the missing closing brace
     }
 
     // My functions
-      //todo------------------------------------- SearchUser----------------------------------
-      function searchUser($mot)
-{
-    $um = new UserManager();
-    $keys = ['username'];
-    $users = $um->search($keys, $mot);
+    //todo------------------------------------- SearchUser----------------------------------
+    function searchUser($mot)
+    {
+        $um = new UserManager();
+        $keys = ['username'];
+        $users = $um->search($keys, $mot);
 
-    $listUsers = []; // Initialize an empty array to store user data
+        $listUsers = []; // Initialize an empty array to store user data
 
-    foreach ($users as $user) {
-        // Create a User object for each user in the result
-        $userObject = new User($user);
+        foreach ($users as $user) {
+            // Create a User object for each user in the result
+            $userObject = new User($user);
 
-        $dateCreation = $userObject->getDateCreation();
-        $dateCreation = new DateTime($dateCreation);
-        $dateCreation = $dateCreation->format('d/m/Y');
+            $dateCreation = $userObject->getDateCreation();
+            $dateCreation = new DateTime($dateCreation);
+            $dateCreation = $dateCreation->format('d/m/Y');
 
-        $roles = json_decode($userObject->getRoles());
-        $role_title = implode(" - ", $roles);
+            $roles = json_decode($userObject->getRoles());
+            $role_title = implode(" - ", $roles);
 
-        $user_role = "<select class='form-select' title ='$role_title'> ";
-        foreach ($roles as $role) {
-            $user_role .= "<option>$role</option>";
+            $user_role = "<select class='form-select' title ='$role_title'> ";
+            foreach ($roles as $role) {
+                $user_role .= "<option>$role</option>";
+            }
+            $user_role .= "</select>";
+
+            $listUsers[] = [
+                'id' => $userObject->getId(),
+                'username' => $userObject->getUsername(),
+                'dateCreation' => $dateCreation,
+                'roles' => $user_role,
+            ];
         }
-        $user_role .= "</select>";
 
-        $listUsers[] = [
-            'id' => $userObject->getId(),
-            'username' => $userObject->getUsername(),
-            'dateCreation' => $dateCreation,
-            'roles' => $user_role,
+        $variables = [
+            'listUsers' => $listUsers,
+            'nbre' => count($listUsers)
         ];
+
+        $files = "View/user/listUser.html.php";
+        $this->generatePage($files, $variables);
     }
 
-    $variables = [
-        'listUsers' => $listUsers,
-        'nbre' => count($listUsers)
-    ];
-
-    $files = "View/user/listUser.html.php";
-    $this->generatePage($files, $variables);
-}
-
-     //todo-------------------------- GenerateFormUser----------------------------------
+    //todo-------------------------- GenerateFormUser----------------------------------
     function generateFormUser($user, $disabled)
     {
         $user_roles = $user->getRoles();
+        //!$user_role has only user roles.
         $rm = new RoleManager();
         $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
         //? [
@@ -95,12 +95,12 @@ class UserController extends MyFct
             if (in_array($libelle, $user_roles)) {
                 $selected = "selected";
                 //!added check box here
-                $checked="checked";
+                $checked = "checked";
             } else {
                 $selected = "";
-                $checked="";
+                $checked = "";
             }
-            $roles[] = ['libelle' => $libelle, 'selected' => $selected,'checked'=>$checked];
+            $roles[] = ['libelle' => $libelle, 'selected' => $selected, 'checked' => $checked];
         }
         //------preparation variables------
         $variables = [
@@ -117,7 +117,7 @@ class UserController extends MyFct
         $file = "View/user/formUser.html.php";
         $this->generatePage($file, $variables);
     }
-  
+
     //todo------------------------------------- DeleteUser----------------------------------
     function deleteUser($id)
     {
@@ -145,8 +145,8 @@ class UserController extends MyFct
         $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
         $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
         $user_roles = $user->getRoles();
-        $user_roles = json_decode($user_roles);
-        $user->setRoles($user_roles); //!we transform just roles coz email,pass,code is string.
+        $user_roles = json_decode($user_roles);//!we transform just roles coz email,pass,code is string.
+        $user->setRoles($user_roles); 
         $disabled = "disabled";
         $this->generateFormUser($user, $disabled);
     }

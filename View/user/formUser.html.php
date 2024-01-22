@@ -30,7 +30,9 @@
             <label for="" class="lab30">ROLES</label>
             <ul class="ml30 p-0">
                 <?php foreach ($roles as $role) : ?>
-                    <li><input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>" <?= $role['selected'] ?>> <?= $role['libelle'] ?> </li>
+                    <li>
+                        <input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>" <?= $role['selected'] ?>> <?= $role['libelle'] ?> 
+                    </li>
                 <?php endforeach; ?>
             </ul>
         </div>
