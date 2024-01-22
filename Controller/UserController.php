@@ -29,10 +29,24 @@ class UserController extends MyFct
                 // Assuming there's a deleteUser method
                 $this->deleteUser($id);
                 break;
+<<<<<<< HEAD
+=======
+            case 'login':
+                if ($_POST) { //! if not empty the valider what is inside $post
+                    // $this->printr($_POST);die;
+                    $this->valider($_POST);
+                }
+                $this->seConnecter();
+                break;
+            case 'logout':
+                $this->seDeconnecter();
+                break;
+>>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
         } // This is the missing closing brace
     }
 
     // My functions
+<<<<<<< HEAD
     //todo------------------------------------- SearchUser----------------------------------
     function searchUser($mot)
     {
@@ -67,6 +81,84 @@ class UserController extends MyFct
             ];
         }
 
+=======
+    //todo----------------------------------seDeconnecter()----------------------------------
+    function seDeconnecter()
+    {
+        session_destroy();
+        header('location:accueil');
+    }
+    //todo-------------------------------------valider----------------------------------
+
+    function valider($data)
+    {
+        $um = new UserManager();
+        extract($data); //! now this extract will create array of what was inside $post
+        //validate username and password
+        if (empty($username) || empty($password)) {
+            echo "<h1>Username and password are required</h1>";
+            die;
+        }
+        $connexion = $um->connexion();
+        $sql = "select * from user where username=? and password = ?";
+        $requete = $connexion->prepare($sql);
+        $requete->execute([$username, sha1($password)]);
+        $user = $requete->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['roles'] = $user['roles'];
+            $_SESSION['bg_navbar'] = "bg-success";
+            //?-----Routing user to accueil page.
+            header('location:accueil');
+            exit();
+        } else {
+            echo "<h1>Identifiant ou mot de passe incorrect</h1>";
+            die;
+        }
+    }
+    //todo-------------------------------------userLogin----------------------------------
+
+    function seConnecter()
+    {
+        $um = new UserManager();
+        $file = "View/user/formLogin.html.php";
+        $this->generatePage($file);
+    }
+    //todo------------------------------------- SearchUser----------------------------------
+    function searchUser($mot)
+    {
+        $um = new UserManager();
+        $keys = ['username'];
+        $users = $um->search($keys, $mot);
+
+        $listUsers = []; // Initialize an empty array to store user data
+
+        foreach ($users as $user) {
+            // Create a User object for each user in the result
+            $userObject = new User($user);
+
+            $dateCreation = $userObject->getDateCreation();
+            $dateCreation = new DateTime($dateCreation);
+            $dateCreation = $dateCreation->format('d/m/Y');
+
+            $roles = json_decode($userObject->getRoles());
+            $role_title = implode(" - ", $roles);
+
+            $user_role = "<select class='form-select' title ='$role_title'> ";
+            foreach ($roles as $role) {
+                $user_role .= "<option>$role</option>";
+            }
+            $user_role .= "</select>";
+
+            $listUsers[] = [
+                'id' => $userObject->getId(),
+                'username' => $userObject->getUsername(),
+                'dateCreation' => $dateCreation,
+                'roles' => $user_role,
+            ];
+        }
+
+>>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
         $variables = [
             'listUsers' => $listUsers,
             'nbre' => count($listUsers)
@@ -106,7 +198,7 @@ class UserController extends MyFct
         $variables = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
-            'password' => '************',
+            'password' => '***********',
             'email' => $user->getEmail(),
             'roles' => $roles,
 
@@ -145,8 +237,14 @@ class UserController extends MyFct
         $um = new UserManager();  //! UserManager is instantiated to call func findByID($id)
         $user = $um->findById($id); //!<--Now $user has code,email,password,roles with values and $um has gettersetter also.
         $user_roles = $user->getRoles();
+<<<<<<< HEAD
         $user_roles = json_decode($user_roles);//!we transform just roles coz email,pass,code is string.
         $user->setRoles($user_roles); 
+=======
+        $user_roles = json_decode($user_roles); //!we transform just roles coz email,pass,code is string.
+        $user->setRoles($user_roles);
+        //! The setRoles() method is called on the User object to update the roles property with the decoded roles.
+>>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
         $disabled = "disabled";
         $this->generateFormUser($user, $disabled);
     }
