@@ -57,7 +57,8 @@ class UserController extends MyFct
     function valider($data)
     {
         $um = new UserManager();
-        extract($data); //! now this extract will create array of what was inside $post
+        extract($data); //! now this extract will create array of what was inside $post for example if user entered admin and pass=1234
+        //! then the extract creates 2 variables $username = "admin"; $password = "1234"; and this is what we have entered in execute.
         //validate username and password
         if (empty($username) || empty($password)) {
             $message = "<h1 class='text-danger'>Identifiant out mot de passe doit pas etre vide</h1>";
