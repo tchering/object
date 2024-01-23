@@ -29,15 +29,9 @@
                 <th class="w30">ACTION</th>
             </tr>
         </thead>
-<<<<<<< HEAD
-        <tbody id="tbody_art" class="">
-           //! <!------------------------------------method php ---------------------->
-            <?php foreach($listUsers as $user):?>
-=======
         <tbody id="tbody_art" class=" w-100">
            <!------------------------------------method php -------------------- -->
             <!-- <?php foreach($listUsers as $user):?>
->>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
             <tr>
                <td class="w10"><?=$user['id']?></td>
                <td class="w10"><?=$user['username']?></td>
@@ -49,13 +43,8 @@
                     <button class="btn btn-sm btn-danger mx-2" onclick="supprimer(<?=$user['id']?>)">Supprimer</button>
                </td>
             </tr>
-<<<<<<< HEAD
-            <?php endforeach; ?>
-            //!<!--------------------------------method php ends here ---------------------->
-=======
             <?php endforeach; ?> -->
             <!--------------------------------method php ends here ---------------------->
->>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
         </tbody>
         <tfoot id="tfoot_art">
             <tr>
@@ -67,31 +56,9 @@
 
 <script>
     //!--------------------------------method js ---------------------->
-    // let listUsers = <?=json_encode($listUsers)?>;
-    // afficher(listUsers);
+    let listUsers = <?=json_encode($listUsers)?>;
+    afficher(listUsers);
     
-<<<<<<< HEAD
-    // function afficher(tableName) {
-    //     let template = tableName.map((user) => {
-    //         return `
-    //             <tr>
-    //                 <td class="w10">${user.id}</td>
-    //                 <td class="w10">${user.username}</td>
-    //                 <td class="w20">${user.dateCreation}</td>
-    //                 <td class="w30">${user.roles}</td>
-    //                 <td class="w30 buttons gap-sm-2 d-flex justify-content-between">
-    //                     <a href="user&action=show&id=${user.id}" class="btn btn-sm btn-success">Afficher</a>
-    //                     <a href="user&action=update&id=${user.id}" class="btn btn-sm btn-primary">Modifier</a>
-    //                     <button class="btn btn-sm btn-danger" onclick="supprimer(${user.id})">Supprimer</button>
-    //                 </td>
-    //             </tr>
-    //         `;
-    //     }).join('');
-    //     document.getElementById('tbody_art').innerHTML = template;
-    //     let nbre = `Total Users: ${tableName.length}`;
-    //     document.getElementById('nbre_art').innerHTML = nbre;
-    // }
-=======
     function afficher(tableName) {
         let template = tableName.map((user) => {
             return `
@@ -112,7 +79,6 @@
         let nbre = `Total Users: ${tableName.length}`;
         document.getElementById('nbre_art').innerHTML = nbre;
     }
->>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
       //!--------------------------------method js ---------------------->
 
 
