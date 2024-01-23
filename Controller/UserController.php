@@ -39,10 +39,13 @@ class UserController extends MyFct
             case 'logout':
                 $this->seDeconnecter();
                 break;
+                
         } // This is the missing closing brace
     }
 
     // My functions
+
+
     //todo----------------------------------seDeconnecter()----------------------------------
     function seDeconnecter()
     {
@@ -59,16 +62,16 @@ class UserController extends MyFct
         if (empty($username) || empty($password)) {
             $message = "<h1 class='text-danger'>Identifiant out mot de passe doit pas etre vide</h1>";
             $variables = [
-                'message'=>$message,
+                'message' => $message,
             ];
             $file = "View/erreur/erreur.html.php";
-            $this->generatePage($file,$variables);;
+            $this->generatePage($file, $variables);;
         }
         $connexion = $um->connexion();
         $sql = "select * from user where (username=? or email=?) and password = ?";
         //le premier $username est pour username=? et le 2eme pour
         $requete = $connexion->prepare($sql);
-        $requete->execute([$username,$username, sha1($password)]);//
+        $requete->execute([$username, $username, sha1($password)]); //
         $user = $requete->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $_SESSION['username'] = $user['username'];
@@ -78,15 +81,16 @@ class UserController extends MyFct
             header('location:accueil');
             exit();
         } else {
-            $message="<div class='center'>";
-            $message.="<img src ='Public/img/tenor.gif' class='img-fluid radius-50' width='25%'>";
-            $message.="</div>";
-            $message.= "<p class='text-red'>Identifiant out mot de passe incorrect</p>";
+            //if loggin is not success then the page will route to erreur.html.php page 
+            $message = "<div class='center'>";
+            $message .= "<img src ='Public/img/tenor.gif' class='img-fluid radius-50' width='25%'>";
+            $message .= "</div>";
+            $message .= "<p class='text-red'>Identifiant out mot de passe incorrect</p>";
             $variables = [
-                'message'=>$message,
+                'message' => $message,
             ];
             $file = "View/erreur/erreur.html.php";
-            $this->generatePage($file,$variables);
+            $this->generatePage($file, $variables);
         }
     }
     //todo-------------------------------------userLogin----------------------------------

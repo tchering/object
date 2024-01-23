@@ -32,7 +32,6 @@
 </head>
 
 <body>
-    <!-- <?php print_r($_SESSION); ?> -->
     <div class="container-fluid">
 
         <nav class="navbar navbar-expand-md <?= $_SESSION['bg_navbar'] ?> text-light fixed-top print-none">
@@ -41,11 +40,15 @@
             <div class="collapse navbar-collapse justify-content-between" id="nav">
                 <ul class="navbar-nav px-2">
                     <li class="nav-item"><a href="accueil" class="nav-link text-light fw-bold">Accueil</a></li>
-
-                    <li class="nav-item"><a href="article" class="nav-link text-light fw-bold">Article</a></li>
-
-                    <li class="nav-item"><a href="client" class="nav-link text-light fw-bold">Client</a></li>
-                    <li class="nav-item dropdown"><a href="" class="nav-link text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">Commande</a>
+                    <!--//! The user with role dev can see nav menu Article and Client but role user cant -->
+                    <?php if (MyFct::isGranted('ROLE_DEPOT')) : ?>
+                        <li class="nav-item"><a href="article" class="nav-link text-light fw-bold">Article</a></li>
+                        <li class="nav-item"><a href="client" class="nav-link text-light fw-bold">Client</a></li>
+                    <?php endif; ?>
+                    <!--//! The user with role caisse can see only Commande -->
+                    <?php if (MyFct::isGranted('ROLE_CAISSE')) : ?>
+                        <li class="nav-item dropdown"><a href="" class="nav-link text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">Commande</a>
+                        <?php endif; ?>
                         <ul class="dropdown-menu">
                             <li class="nav-item"><a href="" class="nav-link text-primary">Devis</a></li>
                             <li class="nav-item"><a href="" class="nav-link text-primary">Facture</a></li>
@@ -56,20 +59,20 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <!-- here new line is added for role granted -->
-                    <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
-                        <!-- Here the dropdown is added with user,role  -->
-                        <li class="nav-item dropdown"><a href="" class="nav-link text-primary text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown">Parametre</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a href="user" class="nav-link">User</a></li>
-                                <li class="nav-item"><a href="roles" class="nav-link">Role</a></li>
-                            </ul>
                         </li>
-                    <?php endif; ?>
-                    <!-- Here connect and desconnet is added aswell -->
-                    <li class="nav-item"><a href="user&action=login" class="nav-link text-light fw-bold">Se connecter</a></li>
-                    <li class="nav-item"><a href="user&action=logout" class="nav-link text-light fw-bold">Se deconnecter</a></li>
+                        <!//!-------------- With this line only user with role admin has access to parameter -->
+                        <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
+                            <!-- Here the dropdown is added with user,role  -->
+                            <li class="nav-item dropdown"><a href="" class="nav-link text-primary text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown">Parametre</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a href="user" class="nav-link">User</a></li>
+                                    <li class="nav-item"><a href="roles" class="nav-link">Role</a></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
+                        <!-- Here connect and desconnet is added aswell -->
+                        <!-- <li class="nav-item"><a href="user&action=login" class="nav-link text-light fw-bold">Se connecter</a></li>
+                        <li class="nav-item"><a href="user&action=logout" class="nav-link text-light fw-bold">Se deconnecter</a></li> -->
                 </ul>
                 <div action="">
                     <div class="input-group">
@@ -85,12 +88,23 @@
                             <li class="nav-item p-2 w-100">Message - 05</li>
                             <li class="nav-item p-2 w-100">Message - 06</li>
                         </ul>
-                        <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>JPB</a>
-                        <ul class="dropdown-menu w100 bg_blue">
-                            <li class="nav-item w100 p-2"><a href="" class="nav-link">Compte</a></li>
-                            <li class="nav-item w100 p-2"><a href="" class="nav-link">Changement mot de passe</a></li>
-                            <li class="nav-item w100 p-2"><a href="" class="nav-link">Deconnexion</a></li>
-                        </ul>
+                    <!--//! If user is logged in then username will be shown -->
+                        <?php if ($_SESSION['username'] != 'user') : ?>
+                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i><?= $_SESSION['username'] ?></a>
+                            <ul class="dropdown-menu w100 bg_blue">
+                                <li class="nav-item w100 p-2"><a href="" class="nav-link">Compte</a></li>
+                                <li class="nav-item w100 p-2"><a href="user&action=changeP" class="nav-link">Changement mot de passe</a></li>
+                                <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li>
+                            </ul>
+                        <!--//! if no one is logged in then Visiter is written with option to se Connecter et s'inscrire -->
+                        <?php else : ?>
+                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Visiteur</a>
+                            <ul class="dropdown-menu w100 bg_blue">
+                                <li class="nav-item w100 p-2"><a href="user&action=login" class="nav-link">Se connecter</a></li>
+                                <li class="nav-item w100 p-2"><a href="" class="nav-link">S'inscrire</a></li>
+                                <!-- <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li> -->
+                            </ul>
+                        <?php endif; ?>
                     </div>
 
                 </div>

@@ -4,7 +4,9 @@ class MyFct
 {
     //! Here we have added function to grant user according to their role.
     static function isGranted($role_libelle)
+    //!here in this role_libelle its empty right now but when we call this function in basepage then we give its value 'ROLE_ADMIN'
     {
+        // printr($role_libelle);
         $user_roles = $_SESSION['roles']; //en format json
         $user_roles = json_decode($user_roles);
         if (in_array($role_libelle, $user_roles)) {

@@ -1,4 +1,4 @@
--- Active: 1705612813056@@127.0.0.1@3306@dwwm_cmfp
+-- Active: 1706004842106@@127.0.0.1@3306@dwwm_cmfp
 --!-------Create Table user---------
 create table user (
     id int auto_increment PRIMARY key,
@@ -11,6 +11,7 @@ create table user (
     roles json
 );
 
+
 ----?------Insertion de données---------
 insert into
     user (username, email, password, roles)
@@ -19,26 +20,28 @@ values
         'sherpa',
         'sherpa@localhost.com',
         sha ('1234'),
-        '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
+        '["ROLE_ADMIN","ROLE_DEPOT","ROLE_CAISSE","ROLE_USER"]'
     ),
     (
         'paul',
         'paul@localhost.com',
         sha ('1234'),
-        '["ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
+        '["ROLE_DEPOT","ROLE_CAISSE","ROLE_USER"]'
     ),
     (
         'marie',
         'marie@localhost.com',
         sha ('1234'),
-        '["ROLE_DEV","ROLE_USER"]'
+        '["ROLE_CAISSE","ROLE_USER"]'
     ),
     (
         'admin',
         'admin@localhost.com',
         sha ('1234'),
-        '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
+        '["ROLE_ADMIN","ROLE_DEPOT","ROLE_CAISSE","ROLE_USER"]'
     );
+
+   
 
 --sha is method sql to hash the password.
 ----!Creation de table role-----------------
@@ -53,6 +56,17 @@ insert into
     role (rang, libelle)
 values
     ('001', 'ROLE_ADMIN'),
-    ('002', 'ROLE_ASSISTANT'),
-    ('003', 'ROLE_DEV'),
-    ('004', 'ROLE_USER');
+    ('002', 'ROLE_DEPOT'),
+    ('003', 'ROLE_CAISSE'),
+    ('004', 'ROLE_USER'),
+     ('OO5','ROLE_DEV'),
+    ('006','ROLE_ASSISTANT');
+   
+
+
+    -- Update name of roles
+start transaction;
+update role set libelle  = 'ROLE_DEPOT' where rang ='002';
+COMMIT;
+update role set libelle = 'ROLE_CAISSE' where rang = '003';
+
