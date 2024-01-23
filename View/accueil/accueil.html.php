@@ -1,5 +1,8 @@
-<div id='accueil' class="w100 ">
-    <div class="banner">
-      <h1>Hello world</h1>
-    </div>
-</div>
+
+<?php 
+
+if($_SESSION['username']){
+  echo "<h1>Welcome: </h1>"."<h1 class='text-light'>".htmlspecialchars($_SESSION['username']);
+} else {
+  echo "<h1>You are not connected </h1>";
+}

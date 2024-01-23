@@ -57,13 +57,18 @@ class UserController extends MyFct
         extract($data); //! now this extract will create array of what was inside $post
         //validate username and password
         if (empty($username) || empty($password)) {
-            echo "<h1>Username and password are required</h1>";
-            die;
+            $message = "<h1 class='text-danger'>Identifiant out mot de passe doit pas etre vide</h1>";
+            $variables = [
+                'message'=>$message,
+            ];
+            $file = "View/erreur/erreur.html.php";
+            $this->generatePage($file,$variables);;
         }
         $connexion = $um->connexion();
-        $sql = "select * from user where username=? and password = ?";
+        $sql = "select * from user where (username=? or email=?) and password = ?";
+        //le premier $username est pour username=? et le 2eme pour
         $requete = $connexion->prepare($sql);
-        $requete->execute([$username, sha1($password)]);
+        $requete->execute([$username,$username, sha1($password)]);//
         $user = $requete->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $_SESSION['username'] = $user['username'];
@@ -73,8 +78,15 @@ class UserController extends MyFct
             header('location:accueil');
             exit();
         } else {
-            echo "<h1>Identifiant ou mot de passe incorrect</h1>";
-            die;
+            $message="<div class='center'>";
+            $message.="<img src ='Public/img/tenor.gif' class='img-fluid radius-50' width='25%'>";
+            $message.="</div>";
+            $message.= "<p class='text-red'>Identifiant out mot de passe incorrect</p>";
+            $variables = [
+                'message'=>$message,
+            ];
+            $file = "View/erreur/erreur.html.php";
+            $this->generatePage($file,$variables);
         }
     }
     //todo-------------------------------------userLogin----------------------------------
