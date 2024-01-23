@@ -2,7 +2,17 @@
 require_once("config/parametre.php");
 class MyFct
 {
-  
+    //! Here we have added function to grant user according to their role.
+    static function isGranted($role_libelle)
+    {
+        $user_roles = $_SESSION['roles']; //en format json
+        $user_roles = json_decode($user_roles);
+        if (in_array($role_libelle, $user_roles)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     //!Changed $base structure added view because its in folder view now
     function generatePage($file, $variables = [], $base = "view/base-bs.html.php")
     {  // generation d'une page
@@ -14,7 +24,7 @@ class MyFct
             extract($variables);
             ob_start();   // Ouvrir   la memoire tampon pour contenir lfichier $file à transformer en texte
             require($file);
-            
+
             $content = ob_get_clean();
             //------------
             //---Ouvrir à nouveau la memoire tampon pour recevoir le fichier $base avec la variable $content
@@ -32,7 +42,7 @@ class MyFct
     }
 
     //! 
- function cprintr($tableau)
+    function cprintr($tableau)
     {
         echo "<pre>";
         print_r($tableau);
@@ -48,10 +58,10 @@ class MyFct
         echo "</pre>";
     }
 
-    function printr($tableau){
+    function printr($tableau)
+    {
         echo "<pre>";
         print_r($tableau);
         echo "</pre>";
     }
-
 }

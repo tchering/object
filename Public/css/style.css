@@ -63,8 +63,13 @@
     display:none !important;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 750px) {
   .line-group-input {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .from-line-input{
     display: flex;
     flex-direction: column;
   }
