@@ -31,8 +31,13 @@
             <ul class="ml30 p-0">
                 <?php foreach ($roles as $role) : ?>
                     <li>
+<<<<<<< HEAD
+                        <input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>" <?= $role['selected'] ?>> <?= $role['libelle'] ?> 
+                    </li>
+=======
                         <input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>"  <?=$role['checked']?>>
                          <?= $role['libelle'] ?> </li>
+>>>>>>> cf032fc699b08a85922e2825375d5fec250aaad0
                 <?php endforeach; ?>
             </ul>
         </div>
