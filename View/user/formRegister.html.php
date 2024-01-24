@@ -23,8 +23,9 @@
                 <input type="text" id="roles" name="roles" value='["ROLE_USER"]' class="form-control w-50" autocomplete="off">
             </div>
             <div class="div-btn d-flex justify-content-around p-3">
-                <a href="accueil" class="btn btn-md btn-primary">Quitter</a>
-                <input type="submit" class="btn btn-md btn-primary" value="valider">
+                <a href="accueil" class="btn btn-md btn-danger">Quitter</a>
+                <input type="submit" class="btn btn-md btn-success" value="valider">
+                <a href="user&action=login" type="submit" class="btn btn-md btn-primary" value="Login">Login</a>
             </div>
             
             <p id='paragraph'> <?php echo isset($message) ? $message : ''; ?></p>
