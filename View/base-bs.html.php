@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Public/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="Public/bootstrap-5.3.2-dist/css/bootstrap.css">
+    
     <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
     <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
     <link rel="stylesheet" href="./Public/css/style.css">
@@ -34,7 +35,7 @@
 <body>
     <div class="container-fluid">
        
-        <nav class="navbar navbar-expand-md <?= $_SESSION['bg_navbar'] ?> text-light fixed-top print-none">
+        <nav class="navbar navbar-expand-md text-dark fixed-top print-none">
             <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
             <div class="collapse navbar-collapse justify-content-between" id="nav">
