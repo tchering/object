@@ -5,11 +5,15 @@ create table user (
     username varchar(250) not null UNIQUE,
     email varchar(100),
     password varchar(200) NOT NULL,
+    confirmPassword VARCHAR(200),
     dateCreation datetime default now (),
     dateModification datetime default now (),
     derniereConnexion datetime,
     roles json
 );
+
+
+
 
 
 ----?------Insertion de données---------

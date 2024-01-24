@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="m-auto w50 my-4 p-4 bg-secondary shadow-white radius-10">
+    <div class="m-auto w50 my-4 p-4  shadow-white radius-10 loginForm">
         <h1 class="titre text-light">LOGIN</h1>
         <form action="" method="post" class="">
             <div class=" my-4">
@@ -14,6 +14,7 @@
                 <a href="accueil" class="btn btn-md btn-primary">Quitter</a>
                 <input type="submit" class="btn btn-md btn-primary" value="valider">
             </div>
+            <p id='paragraph'> <?php echo isset($message) ? $message : ''; ?></p>
         </form>
     </div>
 </div>

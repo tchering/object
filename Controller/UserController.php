@@ -39,11 +39,92 @@ class UserController extends MyFct
             case 'logout':
                 $this->seDeconnecter();
                 break;
-                
+            case 'changePassword':
+                if ($_POST) {
+                    $this->changepassword($_POST);
+                }
+                $this->changeUserPass();
+                break;
+            case 'register':
+                if($_POST){
+                    $this->userRegister($_POST);
+                }
+                $this->userRegisterForm();
+                break;
         } // This is the missing closing brace
     }
 
     // My functions
+    function userRegister($data){
+        $um = new UserManager();
+        extract($data);
+        // $this->printr($data);die;
+        $um->register($data);
+        $manager = new Manager();
+        $message = $manager->registerUser('user',$data);
+        $file ="View/user/formRegister.html.php";
+        $variables = [
+            'message'=>$message,
+        ];
+        $this->generatePage($file,$variables);
+    }
+        //todo -----------------userRegisterFrom------------------
+        function userRegisterForm(){
+            $file = "View/user/formRegister.html.php";
+            $this->generatePage($file);
+        }
+
+    //todo -----------------changePassword()------------------
+    public function changepassword($data)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $um = new UserManager();
+            extract($data);
+            // $this->printr($data);
+            $username = $_SESSION['username'];
+            // $username = $username;//! because of this there was problem.
+            $currentPassword = $_SESSION['password'];
+            $oldPassword = sha1($oldPassword);
+            $newPassword = sha1($newPassword);
+            $confirmPassword = sha1($confirmPassword);
+            // $this->printr($confirmPassword);
+            $message = ""; // Set an empty string as default
+
+            // Comparing old password with current user password
+            if ($oldPassword !== $currentPassword) {
+                $message = "<p class='red text-center'>Votre password ancien est incorrect</p>";
+            } elseif ($newPassword === $oldPassword) {
+                $message = "<p>Your new password cannot be the same as the old password</p>";
+            }
+            // Compare if new password and confirm password are the same
+            elseif ($confirmPassword !== $newPassword) {
+                $message = "<p class='red text-center'>Confirmation password does not match with the new password</p>";
+            } else {
+                // echo $newPassword;die;
+                $connexion = $um->connexion();
+                $sql = "UPDATE user SET password = ? WHERE username = ?";
+                $request = $connexion->prepare($sql);
+                $success = $request->execute([$newPassword, $username]);
+                if ($success) {
+                    $message = "<p class='text-success'>Votre mot de passe a été modifié avec succès.</p>";
+                } else {
+                    $message = "<p class='text-danger'>Failed to change password.</p>";
+                }
+            }
+
+            $variables = [
+                'message' => $message,
+            ];
+            $file = "View/user/formChangePassword.html.php";
+            $this->generatePage($file, $variables);
+        }
+    }
+    //todo----------------------------------showFormChangePass()----------------------------------
+    function changeUserPass()
+    {
+        $file = "View/user/formChangePassword.html.php";
+        $this->generatePage($file);
+    }
 
 
     //todo----------------------------------seDeconnecter()----------------------------------
@@ -56,42 +137,41 @@ class UserController extends MyFct
 
     function valider($data)
     {
-        $um = new UserManager();
-        extract($data); //! now this extract will create array of what was inside $post for example if user entered admin and pass=1234
-        //! then the extract creates 2 variables $username = "admin"; $password = "1234"; and this is what we have entered in execute
-        //validate username and password
-        if (empty($username) || empty($password)) {
-            $message = "<h1 class='text-danger'>Identifiant out mot de passe doit pas etre vide</h1>";
-            $variables = [
-                'message' => $message,
-            ];
-            $file = "View/erreur/erreur.html.php";
-            $this->generatePage($file, $variables);;
-        }
-        $connexion = $um->connexion();
-        $sql = "select * from user where (username=? or email=?) and password = ?";
-        //le premier $username est pour username=? et le 2eme pour
-        $requete = $connexion->prepare($sql);
-        $requete->execute([$username, $username, sha1($password)]); //
-        $user = $requete->fetch(PDO::FETCH_ASSOC);
-        if ($user) {
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['roles'] = $user['roles'];
-            $_SESSION['bg_navbar'] = "bg-success";
-            //?-----Routing user to accueil page.
-            header('location:accueil');
-            exit();
-        } else {
-            //if loggin is not success then the page will route to erreur.html.php page 
-            $message = "<div class='center'>";
-            $message .= "<img src ='Public/img/tenor.gif' class='img-fluid radius-50' width='25%'>";
-            $message .= "</div>";
-            $message .= "<p class='text-red'>Identifiant out mot de passe incorrect</p>";
-            $variables = [
-                'message' => $message,
-            ];
-            $file = "View/erreur/erreur.html.php";
-            $this->generatePage($file, $variables);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $um = new UserManager();
+            extract($data);
+            // $this->printr($data);die;
+            if (empty($username) || empty($password)) {
+                $message = "<p class='red text-center'>Identifiant ou mot de passe ne doit pas être vide</p>";
+                $variables = [
+                    'message' => $message,
+                ];
+                $file = "View/user/formLogin.html.php";
+                $this->generatePage($file, $variables);
+            } else {
+                $connexion = $um->connexion();
+                $sql = "select * from user where (username=? or email=?) and password = ?";
+                $requete = $connexion->prepare($sql);
+                $requete->execute([$username, $username, sha1($password)]);
+                $user = $requete->fetch(PDO::FETCH_ASSOC);
+                // $this->printr($user);die;
+
+                if ($user) {
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['roles'] = $user['roles'];
+                    $_SESSION['bg_navbar'] = "bg-success";
+                    $_SESSION['password'] = $user['password']; //!pass change
+                    header('location:accueil');
+                    exit();
+                } else {
+                    $message = "<p class='red text-center'>Identifiant ou mot de passe incorrect</p>";
+                    $variables = [
+                        'message' => $message,
+                    ];
+                    $file = "View/user/formLogin.html.php";
+                    $this->generatePage($file, $variables);
+                }
+            }
         }
     }
     //todo-------------------------------------userLogin----------------------------------

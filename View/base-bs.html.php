@@ -33,7 +33,7 @@
 
 <body>
     <div class="container-fluid">
-
+       
         <nav class="navbar navbar-expand-md <?= $_SESSION['bg_navbar'] ?> text-light fixed-top print-none">
             <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
@@ -93,7 +93,7 @@
                             <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i><?= $_SESSION['username'] ?></a>
                             <ul class="dropdown-menu w100 bg_blue">
                                 <li class="nav-item w100 p-2"><a href="" class="nav-link">Compte</a></li>
-                                <li class="nav-item w100 p-2"><a href="user&action=changeP" class="nav-link">Changement mot de passe</a></li>
+                                <li class="nav-item w100 p-2"><a href="user&action=changePassword" class="nav-link">Changement mot de passe</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li>
                             </ul>
                         <!--//! if no one is logged in then Visiter is written with option to se Connecter et s'inscrire -->
@@ -101,7 +101,7 @@
                             <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Visiteur</a>
                             <ul class="dropdown-menu w100 bg_blue">
                                 <li class="nav-item w100 p-2"><a href="user&action=login" class="nav-link">Se connecter</a></li>
-                                <li class="nav-item w100 p-2"><a href="" class="nav-link">S'inscrire</a></li>
+                                <li class="nav-item w100 p-2"><a href="user&action=register" class="nav-link">S'inscrire</a></li>
                                 <!-- <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li> -->
                             </ul>
                         <?php endif; ?>
@@ -174,9 +174,7 @@
 
             </div>
         </footer>
-
     </div>
-
 </body>
 
 </html>

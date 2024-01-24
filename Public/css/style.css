@@ -53,6 +53,12 @@
   color: black;
   min-height: 200px;
 }
+.loginForm{
+  background-color: rgb(172, 159, 172);
+}
+.red{
+  color: rgb(143, 5, 5);
+}
 /*-----------------------ECF--------------------*/
 @media print {
   nav,

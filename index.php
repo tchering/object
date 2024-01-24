@@ -4,6 +4,8 @@ if(!$_SESSION){ //if  var $_SESSION is still empty ==== $_SESSION = [];
     $_SESSION['username'] = 'user';  //default value?
     $_SESSION['roles'] = json_encode(['ROLE_USER']);  
     $_SESSION['bg_navbar'] = 'bg_red';  
+    //!new line for pass change
+    // $_SESSION['password'] = 'pass';
 }
 
 include("./Service/extra.php");

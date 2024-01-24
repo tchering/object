@@ -2,8 +2,16 @@
 class UserManager extends Manager
 {
     //!------------ Function search is added here.
-    public function search($keys,$mot){
-       return  $this->searchTable('user',$keys,$mot);
+    public function register($data)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            return $this->registerUser('user', $data);
+        }
+    }
+    public function search($keys, $mot)
+    {
+        return  $this->searchTable('user', $keys, $mot);
     }
     public function update($data, $id)
     {
@@ -21,7 +29,7 @@ class UserManager extends Manager
     //! in our case $id = 1
     //! Now findById calls another func findByIdTable with 'user'
     //! User is instantiated to have getter setter value.
-    public function findById($id, $type = "object") 
+    public function findById($id, $type = "object")
     {
         $resultat = $this->findByIdTable('user', $id);
         if ($type) {
@@ -35,8 +43,8 @@ class UserManager extends Manager
     {
         $result = $this->listTable('user');
         return $result;
-    }  
-      public function deleteById($id)
+    }
+    public function deleteById($id)
     {
         $result = $this->deleteByIdTable('user', $id);
         return $result;
