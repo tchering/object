@@ -26,6 +26,8 @@
                 <?php endforeach; ?>
             </select>
         </div> -->
+        //!newline 
+        <?php if(MyFct::isGranted('ROLE_ADMIN')): ?>
         <div class="line-input my-2">
             <label for="" class="lab30">ROLES</label>
             <ul class="ml30 p-0">
@@ -36,6 +38,7 @@
                 <?php endforeach; ?>
             </ul>
         </div>
+        <?php endif ;?>
         <div class="div_btn">
             <a href="javascript:history.back()" class="btn btn-sm btn-secondary">Retourner</a>
             <input type="reset" class="btn btn-md btn-danger" value="Annuler" <?= $disabled ?>>

@@ -10,22 +10,28 @@ class UserController extends MyFct
                 $this->searchUser($mot);
                 break;
             case "list":
+                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->listUser();
                 break;
             case "show":
+                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->showUser($id);
                 break;
             case "insert":
+                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->insertUser();
                 break;
             case "update":
+                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 //! A lets say user want to modify id 1. now 1 is stored in $id and updateUser is called
                 $this->updateUser($id);
                 break;
             case 'save':
+               if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->saveUser($_POST);
                 break;
             case "delete":
+                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 // Assuming there's a deleteUser method
                 $this->deleteUser($id);
                 break;
@@ -46,7 +52,7 @@ class UserController extends MyFct
                 $this->changeUserPass();
                 break;
             case 'register':
-                if($_POST){
+                if ($_POST) {
                     $this->userRegister($_POST);
                 }
                 $this->userRegisterForm();
@@ -55,24 +61,26 @@ class UserController extends MyFct
     }
 
     // My functions
-    function userRegister($data){
+    function userRegister($data)
+    {
         $um = new UserManager();
         extract($data);
         // $this->printr($data);die;
         $um->register($data);
         $manager = new Manager();
-        $message = $manager->registerUser('user',$data);
-        $file ="View/user/formRegister.html.php";
+        $message = $manager->registerUser('user', $data);
+        $file = "View/user/formRegister.html.php";
         $variables = [
-            'message'=>$message,
+            'message' => $message,
         ];
-        $this->generatePage($file,$variables);
+        $this->generatePage($file, $variables);
     }
-        //todo -----------------userRegisterFrom------------------
-        function userRegisterForm(){
-            $file = "View/user/formRegister.html.php";
-            $this->generatePage($file);
-        }
+    //todo -----------------userRegisterFrom------------------
+    function userRegisterForm()
+    {
+        $file = "View/user/formRegister.html.php";
+        $this->generatePage($file);
+    }
 
     //todo -----------------changePassword()------------------
     public function changepassword($data)
@@ -83,10 +91,16 @@ class UserController extends MyFct
             // $this->printr($data);
             $username = $_SESSION['username'];
             // $username = $username;//! because of this there was problem.
+            // ------------------------
+            //! here need to modify for pass becuase it is stored in session
+            //! instead we store id in session and use getter method to call password.
+            // ---------------------------
+
+
             $currentPassword = $_SESSION['password'];
-            $oldPassword = sha1($oldPassword);
-            $newPassword = sha1($newPassword);
-            $confirmPassword = sha1($confirmPassword);
+            $oldPassword = $this->crypter($oldPassword);
+            $newPassword = $this->crypter($newPassword);
+            $confirmPassword = $this->crypter($confirmPassword);
             // $this->printr($confirmPassword);
             $message = ""; // Set an empty string as default
 
@@ -134,6 +148,7 @@ class UserController extends MyFct
         header('location:accueil');
     }
     //todo-------------------------------------valider----------------------------------
+    //!new created function findOneByCondition is called here.
 
     function valider($data)
     {
@@ -149,18 +164,36 @@ class UserController extends MyFct
                 $file = "View/user/formLogin.html.php";
                 $this->generatePage($file, $variables);
             } else {
-                $connexion = $um->connexion();
-                $sql = "select * from user where (username=? or email=?) and password = ?";
-                $requete = $connexion->prepare($sql);
-                $requete->execute([$username, $username, sha1($password)]);
-                $user = $requete->fetch(PDO::FETCH_ASSOC);
-                // $this->printr($user);die;
+                //! The sql has been moved to manager.
+                // $connexion = $um->connexion();
+                // $sql = "select * from user where (username=? or email=?) and password = ?";
+                // $requete = $connexion->prepare($sql);
+                // // $requete->execute([$username, $username, sha1($password)]);
+                // $requete->execute([$username, $username, $this->crypter($password)]);
+                // $user = $requete->fetch(PDO::FETCH_ASSOC);
+                // //!here instead of sha1 we called the function crypter
+                $dataCondition = [
+                    'username' => $username,
+                    'password' => $this->crypter($password)
+                ];
+                $user = $um->findOneByCondition($dataCondition);
 
+                // The search on username has proven to be false, so we attempt the search on email.
+                //todo Meaning user can use either email or username
+
+                if (!$user->getUsername()) {
+                    $dataCondition = [
+                        'email' => $username,
+                        'password' => $this->crypter($password)
+                    ];
+                    $user = $um->findOneByCondition($dataCondition);
+                }
                 if ($user) {
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['roles'] = $user['roles'];
+                    $_SESSION['username'] = $user->getUsername();
+                    $_SESSION['roles'] = $user->getRoles();
                     $_SESSION['bg_navbar'] = "bg-success";
-                    $_SESSION['password'] = $user['password']; //!pass change
+                    $_SESSION['password'] = $user->getPassword();
+                    $_SESSION['id'] = $user->getId();
                     header('location:accueil');
                     exit();
                 } else {
@@ -310,7 +343,7 @@ class UserController extends MyFct
 
         $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
         //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
-        $data['password'] = sha1($data['password']); //crypting password
+        $data['password'] = $this->crypter($data['password']); //crypting password
         //  $this->printr($data);die;// this will print the changed result after validing.!!imp
         $id = (int) $id; //transformation de $id en integer entier
         if ($id != 0) {   // cas modification
@@ -337,6 +370,11 @@ class UserController extends MyFct
     //todo------------------------------------- listUser----------------------------------
     function listUser()
     {
+        // if ($this->notGranted('ROLE_ADMIN')) {
+        //     $this->throwMessage('You dont have rights to use this action');
+        // }
+        //!--------protection in url.
+        if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
         $um = new UserManager();
         $users = $um->showAll();
         //! here all the keys and user from table user is stored in $users.
@@ -364,8 +402,10 @@ class UserController extends MyFct
             //? object, and then formatted into 'd/m/Y' format.
             //!------------Afficher roles en menu deroulant.
             $roles = json_decode($user->getRoles());
-
-            $role_title = implode(" - ", $roles); //transform the table $role in text with 
+            // $role_title = implode(', ', $roles); //transform the table $role in text with 
+            if(is_array($roles)){
+                $role_title=implode(', ',$roles);
+            }
             //? The user's roles, stored as a JSON string, are decoded into a PHP array using json_decode().
             //? Now $roles = array("ROLE_ADMIN", "ROLE_ASSIST", "ROLE_DEV", "ROLE_USER")
             //*json string looks like this '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'

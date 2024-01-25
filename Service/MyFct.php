@@ -2,13 +2,46 @@
 require_once("config/parametre.php");
 class MyFct
 {
+    function notGranted($role_libelle)
+    {
+        //!In PHP, self:: is used to refer to static properties and methods of the current class.
+        $granted = self::isGranted($role_libelle);//becuase isGranted is static we use $self insted of $this->
+        if ($granted) {
+            return false;
+        }else 
+        return true;
+    }
+
+    function throwMessage($message){
+        $variable=[
+            'message'=>$message,
+        ];
+        $file = "View/erreur/erreur.html.php";
+        $this->generatePage($file,$variable);
+    }
+
+    function crypter($password, $iteration = 127)
+    {
+        for ($i = 0; $i <= $iteration; $i++) {
+            $password = sha1($password);
+        }
+        return $password;
+    }
     //! Here we have added function to grant user according to their role.
     static function isGranted($role_libelle)
-    //!here in this role_libelle its empty right now but when we call this function in basepage then we give its value 'ROLE_ADMIN'
     {
-        // printr($role_libelle);
-        $user_roles = $_SESSION['roles']; //en format json
-        $user_roles = json_decode($user_roles);
+        if (!isset($_SESSION['roles'])) {
+            // Handle the case where $_SESSION['roles'] is not set
+            return false;
+        }
+
+        $user_roles = json_decode($_SESSION['roles'], true);
+
+        if ($user_roles === null) {
+            // Handle the case where $_SESSION['roles'] is not valid JSON
+            return false;
+        }
+
         if (in_array($role_libelle, $user_roles)) {
             return true;
         } else {

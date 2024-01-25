@@ -2,7 +2,7 @@
           <?php
           // when the user is logged in, show welcome message
           if (isset($_SESSION['username'])) {
-            echo "<h1 class='text-center'>Bienvenue: </h1>" . "<h1 class='text-light text-center'>" . htmlspecialchars($_SESSION['username']) . "<i class='fa fa-user'></i>" . "</h1>"
+            echo "<h1 class='text-center'>Bienvenue: </h1>" . "<h1 class='text-light text-center'>" . htmlspecialchars($_SESSION['username']) . "<i class='fa fa-user'></i>"."  " ."<img src ='Public/img/femme1.jpg' class='img-thumbnail'width='50' height='50'>". "</h1>"
               . "<div>
 
               <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>

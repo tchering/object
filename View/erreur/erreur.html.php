@@ -8,6 +8,6 @@
         <h3 class="center w-100 ">
             <?=$message?>
         </h3>
-        <a href="" class="btn btn-md w-100 btn-primary fs-4" onclick="history.back()">Retour</a>
+        <a href="accueil" class="btn btn-md w-100 btn-primary fs-4" >Retour</a>
     </div>
 </div>

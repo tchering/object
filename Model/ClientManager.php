@@ -2,19 +2,29 @@
 
 class ClientManager extends Manager
 {
-    //!------------ Function search is added here.
-    public function search($columnLikes,$mot){
-       return  $this->searchTable('client',$columnLikes,$mot);
+ 
+    public function findAllByCondition( $dataCondition = [], $order = '', $type = 'obj'){
+        return $this->findAllByConditionTable('client',$dataCondition,$order,$type);
     }
-    
-    //?Also this function update and insert in independant therefore doesnot depend on contructor settergetter in Client.php.
-//todo F: Now we know this update has $data[id,numClient,nomClient & adresse] and $id=1 in our case
-//todo : Also update has another function which is defined in Manager.Check Manager
+    public function findOneByCondition( $dataCondition = [], $type = 'obj'){
+        return $this->findOneByConditionTable('client',$dataCondition,$type);
+    }
+    //!------------ Function search is added here.
+    // public function register($data)
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    //         return $this->registerClient('client', $data);
+    //     }
+    // }
+    public function search($keys, $mot)
+    {
+        return  $this->searchTable('client', $keys, $mot);
+    }
     public function update($data, $id)
     {
         return $this->updateTable('client', $data, $id);
     }
-
     //!New Function insert is added here with table 'client' and $data as param.
     public function insert($data)
     {
@@ -24,14 +34,13 @@ class ClientManager extends Manager
     {
         return $this->getDescribeTable('client');
     }
+    //! in our case $id = 1
+    //! Now findById calls another func findByIdTable with 'client'
+    //! Client is instantiated to have getter setter value.
     public function findById($id, $type = "object")
     {
         $resultat = $this->findByIdTable('client', $id);
         if ($type) {
-            //!here when Client class is instantiated the $resultat is pass in its param. 
-            //!We know when class is instantiated construct is auto called therefore construct is Client is called.
-            //! And inside constructor the $data is empty array for now  but will be filled with the data of $resultat.
-            //! Once data is true or not empty the method to gettersetter initiate.
             $object = new Client($resultat); //!instance of Client class
             return $object;
         } else {

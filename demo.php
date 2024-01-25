@@ -15,10 +15,20 @@ spl_autoload_register('charger');
 // $m->insertTable('client',$data);
 
 //! This is to test function search in manager
-$cm = new ClientManager();
-$columnLikes = ['numClient', 'nomClient', 'adresseClient'];
-$mot = "c";
-$clients = $cm->search($columnLikes, $mot);
-MyFct::sprintr($clients);
+// $cm = new ClientManager();
+// $columnLikes = ['numClient', 'nomClient', 'adresseClient'];
+// $mot = "c";
+// $clients = $cm->search($columnLikes, $mot);
+// MyFct::sprintr($clients);
 
 // http://localhost/object/demo.php
+
+$cm = new ClientManager();
+// $dataCondition = [
+//     'numClient'=>'CL001',
+//     'nomClient'=>'Sonam sherpa',
+// ];
+$client1 = $cm->findAllByConditionTable('client',[],"order by nomClient desc");
+printr($client1);
+// $client2 = $cm->findOneByCondition($dataCondition);
+// printr($client2);
