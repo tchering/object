@@ -261,6 +261,11 @@ class UserController extends MyFct
     //todo-------------------------- GenerateFormUser----------------------------------
     function generateFormUser($user, $disabled)
     {
+    //! here the photo is get by getter method
+        $photo = $user->getPhoto();
+        if(!$photo){
+            $photo="photo.jpg";  // 
+        }
         $user_roles = $user->getRoles();
         $rm = new RoleManager();
         $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
@@ -290,11 +295,11 @@ class UserController extends MyFct
             'password' => '***********',
             'email' => $user->getEmail(),
             'roles' => $roles,
+            'photo'=>$photo,
 
             // 'roles'=>json_decode($user->getRoles()),
             'disabled' => $disabled,
         ];
-
         $file = "View/user/formUser.html.php";
         $this->generatePage($file, $variables);
     }

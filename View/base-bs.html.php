@@ -9,6 +9,7 @@
     
     <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
     <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
+    <script src="./Public/js/myScript.js" defer></script>
     <link rel="stylesheet" href="./Public/css/style.css">
     <title>Document</title>
     <style>
@@ -176,6 +177,7 @@
             </div>
         </footer>
     </div>
+        
 </body>
 
 </html>

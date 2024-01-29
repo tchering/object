@@ -1,4 +1,8 @@
 -- Active: 1706004842106@@127.0.0.1@3306@dwwm_cmfp
+--!-------add collone phone in table user ---------
+alter table user add photo VARCHAR(250);
+
+
 --!-------Create Table user---------
 create table user (
     id int auto_increment PRIMARY key,

@@ -10,6 +10,8 @@ class User extends UserManager
     private $dateModification;
     private $derniereConnexion;
     private $roles;
+    //! added photo here
+    private $photo;
 
     public function __construct($data = [])
     {
@@ -156,6 +158,17 @@ class User extends UserManager
     {
         $this->roles = $roles;
 
+        return $this;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
         return $this;
     }
 }

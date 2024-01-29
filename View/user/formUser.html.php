@@ -9,6 +9,12 @@
             <label for="username" class="lab30 obligatoire">USERNAME</label>
             <input type="text" class="from-control w50" id="username" name="username" value="<?= $username ?>" <?= $disabled ?>>
         </div>
+        <!--//todo New input added here for photo -->
+        <div class="line-input">
+            <label for="photo" class="lab30 obligatoire">PHOTO</label>
+            <img id="image_view" src="Public/upload/<?= $photo ?>" width="20%" class=" img-fluid">
+            <input class="ml30" type="file" class="from-control w50" id="photo" name="photo" value="" onChange="previewImage(event,'image_view')" <?= $disabled ?>>
+        </div>
         <div class="line-input my-2">
             <label for="email" class="lab30">EMAIL</label>
             <input type="text" class="from-control w50" id="email" name="email" value="<?= $email ?>" <?= $disabled ?>>
@@ -26,19 +32,20 @@
                 <?php endforeach; ?>
             </select>
         </div> -->
-        //!newline 
-        <?php if(MyFct::isGranted('ROLE_ADMIN')): ?>
-        <div class="line-input my-2">
-            <label for="" class="lab30">ROLES</label>
-            <ul class="ml30 p-0">
-                <?php foreach ($roles as $role) : ?>
-                    <li>
-                        <input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>"  <?=$role['checked']?>>
-                         <?= $role['libelle'] ?> </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <?php endif ;?>
+        //!newline
+        <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
+            <div class="line-input my-2">
+                <label for="" class="lab30">ROLES</label>
+                <ul class="ml30 p-0">
+                    <?php foreach ($roles as $role) : ?>
+                        <li>
+                            <input type="checkbox" name="roles[]" value="<?= $role['libelle'] ?>" <?= $role['checked'] ?>>
+                            <?= $role['libelle'] ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="div_btn">
             <a href="javascript:history.back()" class="btn btn-sm btn-secondary">Retourner</a>
             <input type="reset" class="btn btn-md btn-danger" value="Annuler" <?= $disabled ?>>
