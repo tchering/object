@@ -1,6 +1,6 @@
 <div class="m-auto w80 form">
     <h1 class="titre text-light">SAISIE USER</h1>
-    <form action="user&action=save" method="POST" class="form-container">
+    <form action="user&action=save" method="POST" class="form-container" enctype="multipart/form-data">
         <div class="my-2 hidden">
             <label for="" class="lab30"></label>
             <input type="text" class="from-control w50" id="id" name="id" value="<?= $id ?>" <?= $disabled ?>>
@@ -9,9 +9,10 @@
             <label for="username" class="lab30 obligatoire">USERNAME</label>
             <input type="text" class="from-control w50" id="username" name="username" value="<?= $username ?>" <?= $disabled ?>>
         </div>
-        <!--//todo New input added here for photo -->
+        <!--todo New input added here for photo -->
+       
         <div class="line-input">
-            <label for="photo" class="lab30 obligatoire">PHOTO</label>
+            <label for="photo" class="lab30 obligatoire lab30">PHOTO</label>
             <img id="image_view" src="Public/upload/<?= $photo ?>" width="20%" class=" img-fluid">
             <input class="ml30" type="file" class="from-control w50" id="photo" name="photo" value="" onChange="previewImage(event,'image_view')" <?= $disabled ?>>
         </div>

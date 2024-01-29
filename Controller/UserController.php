@@ -10,32 +10,36 @@ class UserController extends MyFct
                 $this->searchUser($mot);
                 break;
             case "list":
-                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->listUser();
                 break;
             case "show":
-                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->showUser($id);
                 break;
             case "insert":
-                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 $this->insertUser();
                 break;
             case "update":
-                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 //! A lets say user want to modify id 1. now 1 is stored in $id and updateUser is called
                 $this->updateUser($id);
                 break;
             case 'save':
-               if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
-                $this->saveUser($_POST);
+                // $this->printr($_POST);
+                // $this->printr($_FILES);
+                // die;
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                $this->saveUser($_POST, $_FILES);
                 break;
             case "delete":
-                if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+                if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
                 // Assuming there's a deleteUser method
                 $this->deleteUser($id);
                 break;
             case 'login':
+
                 if ($_POST) { //! if not empty the valider what is inside $post
                     // $this->printr($_POST);die;
                     $this->valider($_POST);
@@ -61,6 +65,58 @@ class UserController extends MyFct
     }
 
     // My functions
+    
+    //todo------------------------------------- SaveUser----------------------------------
+
+    //?when save is clicked then $_FILE has this .
+    //     [photo] => Array
+    //         (
+    //             [name] => femme3.jpg
+    //             [full_path] => femme3.jpg
+    //             [type] => image/jpeg
+    //             [tmp_name] => C:\xampp\tmp\phpCFC2.tmp
+    //             [error] => 0
+    //             [size] => 107589
+    //         )
+    //tutorial-----
+    // if (isset($_FILES['photo'])) {
+    //     $file_tmp = $_FILES['photo']['tmp_name'];
+    //     $file_name = $_FILES['photo']['name'];
+    //     move_uploaded_file($file_tmp, "path/to/your/directory/" . $file_name);
+    // }
+    function saveUser($data, $files = [])
+    {
+        // if (isset($files['photo']))
+        if ($files['photo']['name']) { // verify if $files['post'] exist.
+            $file_photo = $_FILES['photo'];
+            $name = $file_photo['name']; //recuperer le nom du fichier uploade avec son extension . 
+            $source = $file_photo['tmp_name']; //recuperer le chemin temporaire de l'emplacement du fichier uploaded
+            $destination = "Public/upload/$name"; //le chemin ou on va stocker le fichier
+            move_uploaded_file($source, $destination); //deplacer le fichier temoraire vers la destination . 
+            $data['photo'] = $name;
+        } else {
+            $file_photo = [
+                'name' => '',
+                'tmp_name' => '',
+            ];
+            unset($data['name']); // supprimer l'element a l'indice 'name' dans $data 
+        }
+        $um = new UserManager();
+        $connexion = $um->connexion();
+        extract($data);
+
+        $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
+        //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
+        $data['password'] = $this->crypter($data['password']); //crypting password
+        //  $this->printr($data);die;// this will print the changed result after validing.!!imp
+        $id = (int) $id; //transformation de $id en integer entier
+        if ($id != 0) {   // cas modification
+            $um->update($data, $id);
+        } else {
+            $um->insert($data);
+        }
+        header('location:user');
+    }
     function userRegister($data)
     {
         $um = new UserManager();
@@ -207,6 +263,7 @@ class UserController extends MyFct
             }
         }
     }
+
     //todo-------------------------------------userLogin----------------------------------
 
     function seConnecter()
@@ -261,10 +318,10 @@ class UserController extends MyFct
     //todo-------------------------- GenerateFormUser----------------------------------
     function generateFormUser($user, $disabled)
     {
-    //! here the photo is get by getter method
+        //! here the photo is get by getter method
         $photo = $user->getPhoto();
-        if(!$photo){
-            $photo="photo.jpg";  // 
+        if (!$photo) {
+            $photo = "photo.jpg";  // 
         }
         $user_roles = $user->getRoles();
         $rm = new RoleManager();
@@ -295,7 +352,7 @@ class UserController extends MyFct
             'password' => '***********',
             'email' => $user->getEmail(),
             'roles' => $roles,
-            'photo'=>$photo,
+            'photo' => $photo,
 
             // 'roles'=>json_decode($user->getRoles()),
             'disabled' => $disabled,
@@ -338,26 +395,7 @@ class UserController extends MyFct
         $this->generateFormUser($user, $disabled);
     }
 
-    //todo------------------------------------- SaveUser----------------------------------
-    function saveUser($data)
-    {
-        //  $this->printr($data); // this is to print before valider
-        $um = new UserManager();
-        $connexion = $um->connexion();
-        extract($data);
 
-        $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
-        //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
-        $data['password'] = $this->crypter($data['password']); //crypting password
-        //  $this->printr($data);die;// this will print the changed result after validing.!!imp
-        $id = (int) $id; //transformation de $id en integer entier
-        if ($id != 0) {   // cas modification
-            $um->update($data, $id);
-        } else {
-            $um->insert($data);
-        }
-        header('location:user');
-    }
 
     //todo------------------------------------- updateUserModifiedVerson----------------------------------
     function updateUser($id) //!here id =1
@@ -379,7 +417,7 @@ class UserController extends MyFct
         //     $this->throwMessage('You dont have rights to use this action');
         // }
         //!--------protection in url.
-        if($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
+        if ($this->notgranted('ROLE_ADMIN')) $this->throwMessage('You dont have right to use this action');
         $um = new UserManager();
         $users = $um->showAll();
         //! here all the keys and user from table user is stored in $users.
@@ -408,8 +446,8 @@ class UserController extends MyFct
             //!------------Afficher roles en menu deroulant.
             $roles = json_decode($user->getRoles());
             // $role_title = implode(', ', $roles); //transform the table $role in text with 
-            if(is_array($roles)){
-                $role_title=implode(', ',$roles);
+            if (is_array($roles)) {
+                $role_title = implode(', ', $roles);
             }
             //? The user's roles, stored as a JSON string, are decoded into a PHP array using json_decode().
             //? Now $roles = array("ROLE_ADMIN", "ROLE_ASSIST", "ROLE_DEV", "ROLE_USER")
