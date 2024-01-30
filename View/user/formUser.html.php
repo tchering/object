@@ -16,6 +16,7 @@
             <img id="image_view" src="Public/upload/<?= $photo ?>" width="20%" class=" img-fluid">
             <input class="ml30" type="file" class="from-control w50" id="photo" name="photo" value="" onChange="previewImage(event,'image_view')" <?= $disabled ?>>
         </div>
+
         <div class="line-input my-2">
             <label for="email" class="lab30">EMAIL</label>
             <input type="text" class="from-control w50" id="email" name="email" value="<?= $email ?>" <?= $disabled ?>>
@@ -33,7 +34,6 @@
                 <?php endforeach; ?>
             </select>
         </div> -->
-        //!newline
         <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
             <div class="line-input my-2">
                 <label for="" class="lab30">ROLES</label>

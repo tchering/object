@@ -1,8 +1,16 @@
           <!-- accueil.html.php -->
           <?php
+          
           // when the user is logged in, show welcome message
           if (isset($_SESSION['username'])) {
-            echo "<h1 class='text-center'>Bienvenue: </h1>" . "<h1 class='text-light text-center'>" . htmlspecialchars($_SESSION['username']) . "<i class='fa fa-user'></i>"."  " ."<img src ='Public/img/femme1.jpg' class='img-thumbnail'width='50' height='50'>". "</h1>"
+            echo "<h1 class='text-center'>Bienvenue: </h1>" . "<h1 class='text-light text-center'>" . htmlspecialchars($_SESSION['username']) . "<i class='fa fa-user'></i>"."<img src ='Public/img/femme1.jpg' class='img-thumbnail'width='50' height='50'>";
+
+            if (isset($_SESSION['photo'])) {
+              $imagePath = $_SESSION['photo'];
+              // Use the image path as needed
+            }
+
+            echo "</h1>"
               . "<div>
 
               <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
@@ -31,12 +39,8 @@
                 <span class='sr-only'>Next</span>
               </a>
             </div>
-            
+
             </div>";
           } else {
             echo "<h1>Vous n'êtes pas connecté</h1>";
           }
-
-// if(isset($_SESSION['user']){
-
-// }

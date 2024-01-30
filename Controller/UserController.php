@@ -92,13 +92,16 @@ class UserController extends MyFct
             $name = $file_photo['name']; //recuperer le nom du fichier uploade avec son extension . 
             $source = $file_photo['tmp_name']; //recuperer le chemin temporaire de l'emplacement du fichier uploaded
             $destination = "Public/upload/$name"; //le chemin ou on va stocker le fichier
+            $_SESSION['photo'] = $destination;
             move_uploaded_file($source, $destination); //deplacer le fichier temoraire vers la destination . 
+            //here this line saves photo in $data and now photo name in database.
             $data['photo'] = $name;
         } else {
             $file_photo = [
                 'name' => '',
                 'tmp_name' => '',
             ];
+            //So if photo is empty this line will keep previous photo.
             unset($data['name']); // supprimer l'element a l'indice 'name' dans $data 
         }
         $um = new UserManager();
@@ -466,12 +469,16 @@ class UserController extends MyFct
             //     <option>ROLE_DEV</option>
             //     <option>ROLE_USER</option>
             // </select>
+            //! this is to show photo in list users.
+            $photo =$user->getPhoto();
+            $photo=(!$photo)?'photo.jpg':$photo;
 
             $listUsers[] = [
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
                 'dateCreation' => $dateCreation,
                 'roles' => $user_role,
+                'photo'=>$photo,
             ];
             //? An associative array is created with the user's id, username, formatted creation date, and the HTML select
             //?  element. This array is then added to the $listUsers array.

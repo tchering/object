@@ -23,32 +23,38 @@
         <thead id="thead_art">
             <tr class="bg-success">
                 <th class="w10">CODE</th>
+                <th class='w10'>Photo</th>
+                <th class='w10'>Download</th>
                 <th class="w10">USERNAME</th>
                 <th class="w20">DATECREATION</th>
-                <th class="w30">ROLES</th>
-                <th class="w30">ACTION</th>
+                <th class="w20">ROLES</th>
+                <th class="w20">ACTION</th>
             </tr>
         </thead>
         <tbody id="tbody_art" class=" w-100">
-           <!------------------------------------method php -------------------- -->
-            <!-- <?php foreach($listUsers as $user):?>
-            <tr>
-               <td class="w10"><?=$user['id']?></td>
-               <td class="w10"><?=$user['username']?></td>
-               <td class="w20"><?=$user['dateCreation']?></td>
-               <td class="w30"><?=$user['roles']?></td>
-               <td class=" w30 d-flex justify-content-between">
-                    <a href="user&action=show&id=<?=$user['id']?>" class="btn btn-sm btn-success mx-2">Afficher</a>
-                    <a href="user&action=update&id=<?=$user['id']?>" class="btn btn-sm btn-primary mx-2">Modifier</a>
-                    <button class="btn btn-sm btn-danger mx-2" onclick="supprimer(<?=$user['id']?>)">Supprimer</button>
-               </td>
-            </tr>
+            <!------------------------------------method php -------------------- -->
+            <!-- <?php foreach ($listUsers as $user) : ?>
+                <tr>
+                    <td class="w10"><?= $user['id'] ?></td>
+                    <td class='w10 '> <img src='Public/upload/<?= $user['photo'] ?>' width="40%" class="img-fluid zoom"></td>
+                    <td class='w10'><a href="Public/upload/<?= $user['photo'] ?>" download>Telecharger</a></td>
+                    <td class="w10"><?= $user['username'] ?></td>
+                    <td class="w20"><?= $user['dateCreation'] ?></td>
+                    <td class="w20"><?= $user['roles'] ?></td>
+                    <td class=" w20 d-flex justify-content-between">
+                        <a href="user&action=show&id=<?= $user['id'] ?>" class="btn btn-sm btn-success mx-2">Afficher</a>
+                        <a href="user&action=update&id=<?= $user['id'] ?>" class="btn btn-sm btn-primary mx-2">Modifier</a>
+                        <button class="btn btn-sm btn-danger mx-2" onclick="supprimer(<?= $user['id'] ?>)">Supprimer</button>
+                    </td>
+                </tr>
             <?php endforeach; ?> -->
             <!--------------------------------method php ends here ---------------------->
         </tbody>
         <tfoot id="tfoot_art">
             <tr>
-                <th colspan="5" class="text-center bg-success" id="nbre_art"><h3>Total users : <?=$nbre?></h3></th>
+                <th colspan="5" class="text-center bg-success" id="nbre_art">
+                    <h3>Total users : <?= $nbre ?></h3>
+                </th>
             </tr>
         </tfoot>
     </table>
@@ -56,18 +62,20 @@
 
 <script>
     //!--------------------------------method js ---------------------->
-    let listUsers = <?=json_encode($listUsers)?>;
+    let listUsers = <?= json_encode($listUsers) ?>;
     afficher(listUsers);
-    
+
     function afficher(tableName) {
         let template = tableName.map((user) => {
             return `
-                <tr class ="">
+                <tr class="">
                     <td class="w10">${user.id}</td>
+                    <td class="w10"><img src="Public/upload/${user.photo}" width="40%" class="img-fluid zoom"></td>
+                    <td class="w10"><a href="Public/upload/${user.photo}" download>Telecharger</a></td>
                     <td class="w10">${user.username}</td>
                     <td class="w20">${user.dateCreation}</td>
-                    <td class="w30">${user.roles}</td>
-                    <td class="w30 buttons gap-sm-2 d-flex justify-content-between">
+                    <td class="w20">${user.roles}</td>
+                    <td class="w20 buttons gap-sm-2 d-flex justify-content-between">
                         <a href="user&action=show&id=${user.id}" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
                         <a href="user&action=update&id=${user.id}" class="btn btn-sm btn-primary"><i class="fa-solid fa-gear"></i></a>
                         <button class="btn btn-sm btn-danger" onclick="supprimer(${user.id})"><i class="fa-solid fa-trash"></i></button>
@@ -77,9 +85,9 @@
         }).join('');
         document.getElementById('tbody_art').innerHTML = template;
         let nbre = `Total Users: ${tableName.length}`;
-        document.getElementById('nbre_art').innerHTML = nbre;
+        document.getElementById('nbre_art').innerHTML = `<h3>${nbre}</h3>`;
     }
-      //!--------------------------------method js ---------------------->
+    //!--------------------------------method js ---------------------->
 
 
     function supprimer(id) {

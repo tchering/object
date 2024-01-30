@@ -1,4 +1,5 @@
 <?php
+
 session_start(); 
 if(!$_SESSION){ //if  var $_SESSION is still empty ==== $_SESSION = [];
     $_SESSION['username'] = 'user';  //default value?
