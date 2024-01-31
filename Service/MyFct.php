@@ -2,6 +2,7 @@
 require_once("config/parametre.php");
 class MyFct
 {
+    
     function notGranted($role_libelle)
     {
         //!In PHP, self:: is used to refer to static properties and methods of the current class.

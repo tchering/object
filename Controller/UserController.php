@@ -114,14 +114,7 @@ class UserController extends MyFct
         extract($data);
 
         $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
-        //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
-        // $password=$data['password'];
-        // if($password){
-        //     $password=$this->crypter($password);
-        //     $data['password'] = $password;
-        // } else {
-        //     unset($data['password']);
-        // }
+
         $data['password'] = $this->crypter($data['password']); //crypting password
         //  $this->printr($data);die;// this will print the changed result after validing.!!imp
         $id = (int) $id; //transformation de $id en integer entier

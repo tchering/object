@@ -23,3 +23,24 @@ function previewImage(event, id_image) {
     elt_image.src = URL.createObjectURL(image);
   }
 }
+
+
+function getIdChecked(name_element){
+  let checkboxes = document.getElementsByName('role');
+      let id;
+      checkboxes.forEach((item) => {
+          if(item.checked==true){
+              id = item.value;
+          }
+      });
+}
+//this function allow user to check only 1 role.Same  user cannot have many roles . 
+const onlyOne = (checkbox) => {
+  let checkboxes = document.getElementsByName(checkbox.name);
+  checkboxes.forEach((item) => {
+      if (item !== checkbox) {
+          item.checked = false;
+      }
+  });
+  checkbox.checked = true;
+}

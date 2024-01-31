@@ -1,6 +1,6 @@
 <div class="m-auto w80 form">
     <h1 class="titre text-light">SAISIE USER</h1>
-    <form action="user&action=save" method="POST" class="form-container" enctype="multipart/form-data">
+    <form action="role&action=save" method="POST" class="form-container" enctype="multipart/form-data">
         <div class="my-2 hidden">
             <label for="" class="lab30"></label>
             <input type="text" class="from-control w50" id="id" name="id" value="<?= $id ?>" <?= $disabled ?>>
