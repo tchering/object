@@ -17,9 +17,9 @@
     <h1 class="titre center text-light">Liste ROLES</h1>
     <div class="div_btn">
         <a href="role&action=insert" class="btn btn-md btn-success mb-2 print-none"><i class="fa fa-plus"></i>Ajourter</a>
-        <a href="role&action=show" class="btn btn-md btn-success mb-2 print-none"> <i class="fa fa-eye"></i>Afficher</a>
-        <a href="role&action=modify" class="btn btn-md btn-success mb-2 print-none"><i class="fa-solid fa-gear"></i>Modifier </a>
-        <a href="role&action=insert" class="btn btn-md btn-success mb-2 print-none"><i class="fa-solid fa-trash"></i>Supprimer</a>
+        <a href="role&action=show" class="btn btn-md btn-secondary mb-2 print-none"> <i class="fa fa-eye"></i>Afficher</a>
+        <button class="btn btn-md btn-dark mb-2 print-none" onclick="modifierRole()"><i class="fa-solid fa-gear"></i>Modifier </button>
+        <a href="role&action=insert" class="btn btn-md btn-danger mb-2 print-none"><i class="fa-solid fa-trash"></i>Supprimer</a>
         <a href="javascript:window.print()" class="btn btn-md btn-primary mb-2 print-none"> <i class="fa fa-print"></i> Imprimer</a>
     </div>
     <table class="table w100 table-responsive">
@@ -75,11 +75,22 @@
         let nbre = `Total Users: ${tableName.length}`;
         document.getElementById('nbre_art').innerHTML = `<h3>${nbre}</h3>`;
     }
-    //!--------------------------------method js ---------------------->    
-    const modifier=()=>{
-
+    //!--------------------------------method js ---------------------->  
+    //new fnc added modifier  
+    modifierRole = () => {
+        let checkboxes = document.getElementsByName('role');
+        let id = 0;
+        checkboxes.forEach((item) => {
+            if (item.checked == true) id = item.value;
+        })
+        if (id == 0) {
+            alert('Please select role');
+        } else {
+            document.location.href=`role&action=update&id=${id}`;
+            // document.location.href="role&action=update&id="+id; 
+        }
     }
-//this function allow user to check only 1 role.Same  user cannot have many roles . 
+    //this function allow user to check only 1 role.Same  user cannot have many roles . 
     const onlyOne = (checkbox) => {
         let checkboxes = document.getElementsByName(checkbox.name);
         checkboxes.forEach((item) => {

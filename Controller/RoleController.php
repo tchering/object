@@ -65,11 +65,7 @@
             ];
 
             //$role=$rm->findOneByCondition($dataCondition,'array');
-           $role=$rm->findOneByCondition($dataCondition);
-           if(!$role->getRolename()){//La recherche sur rolename s'est averée fausse alors on tente la recherche sur email
-            $dataCondition=['email'=>$rolename,'password'=>$this->crypter($password)];
-            $role=$rm->findOneByCondition($dataCondition);
-           }
+       
 
             if($role->getRolename()){
                 $_SESSION['rolename']=$role->getRolename(); //$role['rolename'];
@@ -117,7 +113,7 @@
         function insererRole(){
             //-----Role---
             $role=new Role();  // Créer un role à vide
-            $role->setRoles(['ROLE_USER']);  //  Au moins un role à créer doit avoir 'ROLE_ROLE' 
+        
             //$role_roles=$role->getRoles(); // Recupartion de roles (json) dans role
             $disabled="";
             /*------Creation de la page FormRole-----*/
@@ -137,45 +133,19 @@
             //-----Role---
             $rm=new RoleManager();  //  Instancier la clasee RoleManager
             $role=$rm->findById($id);  // Recuperer role corespondant à l'id $id. D'après RoleManager on a ici un objet
-            $role_roles=$role->getRoles(); // Recupartion de roles (json) dans role
-            $role_roles=json_decode($role_roles); //  transformation de $role_roles qui est encore JSON en tableau php
-            $role->setRoles($role_roles);   // mettre à jour le roles dans l'objet role en tableau php
             $disabled="";
             $this->generateFormRole($role,$disabled);
         }  
         function generateFormRole($role,$disabled){
-            $photo=$role->getPhoto();
-
-            if(!$photo){
-                $photo="photo.jpg";// l'image photo.jpg doit être créer
-            }
-
-            $role_roles=$role->getRoles();
-            //MyFct:😛rintr($role_roles);die;
             $rm=new RoleManager();
-            $myRoles=$rm->showAll();  // recuperer la totalité de la table role.
-            $roles=[]; // variale $roles à envoyer vers la page form.html.php
-            foreach($myRoles as $role){
-                //$this->printr($role);die;
-                $libelle=$role['libelle'];
-                if(in_array($libelle,$role_roles)){  // si $libelle fait parti de la tables $role_roles
-                    $selected="selected";
-                    $checked="checked";
-                }else{
-                    $selected="";
-                    $checked="";
-                }
-                $roles[]=['libelle'=>$libelle,'selected'=>$selected,'checked'=>$checked];
-            }
-            //---------prearation variables---
+
+            
             $variables=[
                 'id'=>$role->getId(),
-                'rolename'=>$role->getRolename(),
-                'password'=>'',
-                'email'=>$role->getEmail(),
-                'roles'=>$roles,
-                'disabled'=>$disabled,
-                'photo'=>$photo,
+               'rang'=>$role->getRang(),
+               'libelle'=>$role->getLibelle(),
+               'disabled'=>$disabled,
+               
             ];
             //----Ouverture de la page
             $file="View/role/formRole.html.php";
@@ -200,9 +170,6 @@
             ];
             unset($data['name']); //supprimer l'element à l'indice 'name' dans $data
            }
-
-
-           $file_photo = $file['photo'];
             $rm=new RoleManager();
             $connexion=$rm->connexion();
             $data['roles']=json_encode($data['roles']); // tranformer le condetune de $data['roles'] en json
