@@ -32,9 +32,9 @@ class RoleManager extends Manager
             return $resultat;
         }
     }
-    public function showAll()
+    public function showAll($order='')
     {
-        $result = $this->listTable('role');
+        $result = $this->listTable('role',$order);
         return $result;
     }
     public function deleteById($id)

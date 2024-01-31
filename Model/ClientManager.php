@@ -47,9 +47,9 @@ class ClientManager extends Manager
             return $resultat;
         }
     }
-    public function showAll()
+    public function showAll($order='')
     {
-        $result = $this->listTable('client');
+        $result = $this->listTable('client',$order);
         return $result;
     }
     public function deleteById($id)

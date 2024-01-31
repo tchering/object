@@ -87,7 +87,12 @@ class UserController extends MyFct
     function saveUser($data, $files = [])
     {
         // if (isset($files['photo']))
-        if ($files['photo']['name']) { // verify if $files['post'] exist.
+        // if ($files['photo']['name']) { .
+            //! it is more easy to comprehend like this 
+            $files=$_FILES;
+            $file_photo=$files['photo'];
+            if($file_photo['name']){
+
             $file_photo = $_FILES['photo'];
             $name = $file_photo['name']; //recuperer le nom du fichier uploade avec son extension . 
             $source = $file_photo['tmp_name']; //recuperer le chemin temporaire de l'emplacement du fichier uploaded
@@ -110,6 +115,13 @@ class UserController extends MyFct
 
         $data['roles'] = json_encode($data['roles']); //transform just role inside data in json string
         //after transforming in json it looks ["ROLE_ADMIN","ROLE_DEV","ROLE_USER"]
+        // $password=$data['password'];
+        // if($password){
+        //     $password=$this->crypter($password);
+        //     $data['password'] = $password;
+        // } else {
+        //     unset($data['password']);
+        // }
         $data['password'] = $this->crypter($data['password']); //crypting password
         //  $this->printr($data);die;// this will print the changed result after validing.!!imp
         $id = (int) $id; //transformation de $id en integer entier
@@ -327,6 +339,10 @@ class UserController extends MyFct
             $photo = "photo.jpg";  // 
         }
         $user_roles = $user->getRoles();
+        if ($user_roles === NULL) {
+            $user_roles = [];
+        }
+        
         $rm = new RoleManager();
         $myRoles = $rm->showAll(); //! $myRoles has following data of associative array.
         //? [
@@ -447,28 +463,15 @@ class UserController extends MyFct
             //? The user's creation date is retrieved using the getDateCreation() method, converted into a DateTime 
             //? object, and then formatted into 'd/m/Y' format.
             //!------------Afficher roles en menu deroulant.
+            $role_title = ''; // Define $role_title as an empty string
             $roles = json_decode($user->getRoles());
-            // $role_title = implode(', ', $roles); //transform the table $role in text with 
+            
             if (is_array($roles)) {
                 $role_title = implode(', ', $roles);
             }
-            //? The user's roles, stored as a JSON string, are decoded into a PHP array using json_decode().
-            //? Now $roles = array("ROLE_ADMIN", "ROLE_ASSIST", "ROLE_DEV", "ROLE_USER")
-            //*json string looks like this '["ROLE_ADMIN","ROLE_ASSIST","ROLE_DEV","ROLE_USER"]'
-
+            
             $user_role = "<select class='form-select'  title ='$role_title'> ";
-            //? A HTML select element is created and stored in $user_role var with the user's roles as options.
-            foreach ($roles as $role) {
-                $user_role .= "<option>$role</option>";
-                //after complete loop $user_role = <option>ROLE_ADMIN</option><option>ROLE_ASSIST</option> AND SO ON.
-            }
-            $user_role .= "</select>"; //? final html looks like this below:
-            // <select class='form-select'>
-            //     <option>ROLE_ADMIN</option>
-            //     <option>ROLE_ASSIST</option>
-            //     <option>ROLE_DEV</option>
-            //     <option>ROLE_USER</option>
-            // </select>
+           //! Foreach for roles is missing here .
             //! this is to show photo in list users.
             $photo =$user->getPhoto();
             $photo=(!$photo)?'photo.jpg':$photo;

@@ -48,9 +48,9 @@ class ArticleManager extends Manager
             return $resultat;
         }
     }
-    public function showAll()
+    public function showAll($order='')
     {
-        $result = $this->listTable('article');
+        $result = $this->listTable('article',$order);
         return $result;
     }
     public function deleteById($id)

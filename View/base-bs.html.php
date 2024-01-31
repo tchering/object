@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Public/bootstrap-5.3.2-dist/css/bootstrap.css">
-    
+
     <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
     <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
     <script src="./Public/js/myScript.js" defer></script>
@@ -35,7 +35,7 @@
 
 <body>
     <div class="container-fluid">
-       
+
         <nav class="navbar navbar-expand-md text-dark fixed-top print-none">
             <a href="" class="btn"><i class="fa fa-laptop fa-2x text-light"></i></a>
             <a href="#nav" class="btn bg-light navbar-toggler mx-2" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
@@ -62,18 +62,18 @@
                             </li>
                         </ul>
                         </li>
-                        <!//!-------------- With this line only user with role admin has access to parameter -->
-                        <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
-                            <!-- Here the dropdown is added with user,role  -->
-                            <li class="nav-item dropdown"><a href="" class="nav-link text-primary text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown">Parametre</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a href="user" class="nav-link">User</a></li>
-                                    <li class="nav-item"><a href="roles" class="nav-link">Role</a></li>
-                                </ul>
-                            </li>
-                        <?php endif; ?>
-                        <!-- Here connect and desconnet is added aswell -->
-                        <!-- <li class="nav-item"><a href="user&action=login" class="nav-link text-light fw-bold">Se connecter</a></li>
+                        <! //!-------------- With this line only user with role admin has access to parameter -->
+                            <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
+                                <!-- Here the dropdown is added with user,role  -->
+                                <li class="nav-item dropdown"><a href="" class="nav-link text-primary text-light fw-bold dropdown-toggle" data-bs-toggle="dropdown">Parametre</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a href="user" class="nav-link">User</a></li>
+                                        <li class="nav-item"><a href="role" class="nav-link">Role</a></li>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            <!-- Here connect and desconnet is added aswell -->
+                            <!-- <li class="nav-item"><a href="user&action=login" class="nav-link text-light fw-bold">Se connecter</a></li>
                         <li class="nav-item"><a href="user&action=logout" class="nav-link text-light fw-bold">Se deconnecter</a></li> -->
                 </ul>
                 <div action="">
@@ -90,7 +90,7 @@
                             <li class="nav-item p-2 w-100">Message - 05</li>
                             <li class="nav-item p-2 w-100">Message - 06</li>
                         </ul>
-                    <!--//! If user is logged in then username will be shown -->
+                        <!--//! If user is logged in then username will be shown -->
                         <?php if ($_SESSION['username'] != 'user') : ?>
                             <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i><?= $_SESSION['username'] ?></a>
                             <ul class="dropdown-menu w100 bg_blue">
@@ -98,7 +98,7 @@
                                 <li class="nav-item w100 p-2"><a href="user&action=changePassword" class="nav-link">Changement mot de passe</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li>
                             </ul>
-                        <!--//! if no one is logged in then Visiter is written with option to se Connecter et s'inscrire -->
+                            <!--//! if no one is logged in then Visiter is written with option to se Connecter et s'inscrire -->
                         <?php else : ?>
                             <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Visiteur</a>
                             <ul class="dropdown-menu w100 bg_blue">
@@ -177,7 +177,7 @@
             </div>
         </footer>
     </div>
-        
+
 </body>
 
 </html>

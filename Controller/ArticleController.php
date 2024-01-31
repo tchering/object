@@ -42,7 +42,7 @@ class ArticleController extends MyFct
     function afficher()
     {
       $am = new ArticleManager();
-      $articles = $am->findAll(false);
+      $articles = $am->showAll(false);
       $file = "View/article/list.html.php";
       $variables = [
         'articles'=>json_encode($articles),

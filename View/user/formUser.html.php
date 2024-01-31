@@ -14,7 +14,8 @@
         <div class="line-input">
             <label for="photo" class="lab30 obligatoire lab30">PHOTO</label>
             <img id="image_view" src="Public/upload/<?= $photo ?>" width="20%" class=" img-fluid">
-            <input class="ml30" type="file" class="from-control w50" id="photo" name="photo" value="" onChange="previewImage(event,'image_view')" <?= $disabled ?>>
+            <input class="ml30 hidden" type="file" class="from-control w50" id="photo" name="photo" onChange="previewImage(event,'image_view')" <?= $disabled ?>>
+            <a href="javascript:choisir()" class='btn btn-md btn-primary ml30'>Select Photo</a>
         </div>
 
         <div class="line-input my-2">
@@ -26,14 +27,6 @@
             <input type="password" class="from-control w50" id="password" name="password" value="<?= $password ?>" <?= $disabled ?>required>
         </div>
         <!-- this is multiple selection and also dropdown -->
-        <!-- <div class="line-input my-2">
-            <label for="roles" class="lab30">ROLES</label>
-            <select class="w60 form-control" id="roles" name="roles[]" multiple>
-                <?php foreach ($roles as $role) : ?>
-                    <option value="<?= $role['libelle'] ?>" <?= $role['selected'] ?>><?= $role['libelle'] ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div> -->
         <?php if (MyFct::isGranted('ROLE_ADMIN')) : ?>
             <div class="line-input my-2">
                 <label for="" class="lab30">ROLES</label>
@@ -54,3 +47,9 @@
         </div>
     </form>
 </div>
+
+<script>
+function choisir() {
+    document.getElementById('photo').click();
+}
+</script>

@@ -296,9 +296,9 @@ class Manager
     //         print_r($tableau);
     //         echo "</pre>";
     //     }
-    function listTable($nomTable)
+    function listTable($nomTable,$order='')
     {
-        $sql = "select * from $nomTable";
+        $sql = "select * from $nomTable $order";
         $connexion = $this->connexion();
         $requete = $connexion->prepare($sql);
         $requete->execute();
