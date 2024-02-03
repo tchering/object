@@ -92,7 +92,7 @@
                         </ul>
                         <!--//! If user is logged in then username will be shown -->
                         <?php if ($_SESSION['username'] != 'user') : ?>
-                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i><?= $_SESSION['username'] ?></a>
+                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Welcome</a>
                             <ul class="dropdown-menu w100 bg_blue">
                                 <li class="nav-item w100 p-2"><a href="" class="nav-link">Compte</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=changePassword" class="nav-link">Changement mot de passe</a></li>
