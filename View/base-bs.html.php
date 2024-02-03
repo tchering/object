@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="Public/bootstrap-5.3.2-dist/css/bootstrap.css">
 
     <link rel="stylesheet" href="./Public/fontawesome-free-6.5.0-web/css/all.css">
-    <script src="./Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
-    <script src="./Public/js/myScript.js" defer></script>
-    <link rel="stylesheet" href="./Public/css/style.css">
+    <script src="Public/bootstrap-5.3.2-dist/js/bootstrap.bundle.js" defer></script>
+    <script src="Public/js/myScript.js" defer></script>
+    <link rel="stylesheet" href="Public/css/style.css">
     <title>Document</title>
     <style>
         #aside-left,
@@ -91,16 +91,15 @@
                             <li class="nav-item p-2 w-100">Message - 06</li>
                         </ul>
                         <!--//! If user is logged in then username will be shown -->
-                        <?php if ($_SESSION['username'] != 'user') : ?>
-                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Welcome</a>
+                        <?php if (isset($_SESSION['username']) && $_SESSION['username'] != 'user') : ?>
+                            <a href="" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Welcome</a>
                             <ul class="dropdown-menu w100 bg_blue">
                                 <li class="nav-item w100 p-2"><a href="" class="nav-link">Compte</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=changePassword" class="nav-link">Changement mot de passe</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=logout" class="nav-link">Deconnexion</a></li>
                             </ul>
-                            <!--//! if no one is logged in then Visiter is written with option to se Connecter et s'inscrire -->
                         <?php else : ?>
-                            <a href="" class=" dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Visiteur</a>
+                            <a href="" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-user fa-2x"></i>Visiteur</a>
                             <ul class="dropdown-menu w100 bg_blue">
                                 <li class="nav-item w100 p-2"><a href="user&action=login" class="nav-link">Se connecter</a></li>
                                 <li class="nav-item w100 p-2"><a href="user&action=register" class="nav-link">S'inscrire</a></li>
